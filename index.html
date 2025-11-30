@@ -1,32 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-   <title>ShonkuWeb CMS</title>
-   <style>
-      body {
-         background: #ffffff;
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         height: 100vh;
-         margin: 0;
-         font-family: Arial, sans-serif;
-         text-align: center;
-      }
-      h1 {
-         font-size: 32px;
-         margin-bottom: 10px;
-      }
-      p {
-         font-size: 18px;
-         color: #555;
-      }
-   </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-   <div>
-      <h1>Welcome to ShonkuWeb CMS</h1>
-      <p>Under Development</p>
-   </div>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <img src="images/logo.jpg" alt="Logo" width="40" height="40">
+                </div>
+            </div>
+
+            <h1 class="welcome-title">Welcome Back</h1>
+            <p class="welcome-subtitle">Please enter your password to continue</p>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" placeholder="Enter your password">
+                    <button class="toggle-password" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z"
+                                stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                                stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+
+
+            <button class="sign-in-btn">Sign In</button>
+        </div>
+    </div>
+    <script src="config.js"></script>
+    <script src="auth.js"></script>
+    <script src="security.js"></script>
 </body>
+
 </html>
