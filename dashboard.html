@@ -30,38 +30,19 @@
             font-size: 16px;
             color: #64748b;
         }
-
-        .search-container {
-            margin-top: 32px;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 14px 24px;
-            border-radius: 30px;
-            border: 1px solid #cbd5e1;
-            background-color: #f1f5f9;
-            color: #1e293b;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        .search-input:focus {
-            border-color: #000000;
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
-            background-color: white;
-        }
     </style>
 </head>
 
 <body>
     <img src="images/logo-black.jpg" alt="Logo" class="top-left-logo">
     <div class="dashboard-container">
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Search...">
+        <h1 class="dashboard-title">Dashboard</h1>
+        <p class="dashboard-subtitle">Welcome to your dashboard</p>
+
+        <div class="dashboard-actions">
+            <a href="create-client.html" class="btn-primary action-btn">+ Create Client Profile</a>
+            <a href="leads.html" class="btn-primary action-btn secondary-btn">Lead Generation</a>
+            <a href="client-list.html" class="btn-primary action-btn secondary-btn">View Client Profiles</a>
         </div>
     </div>
     <script src="security.js"></script>

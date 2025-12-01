@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Generation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .leads-table-container {
+            margin-top: 40px;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow-x: auto;
+        }
+
+        .leads-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        .leads-table th,
+        .leads-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .leads-table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .leads-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/logo-black.jpg" alt="Logo" class="top-left-logo">
+
+    <div class="main-container">
+        <div class="form-header">
+            <h1>Lead Generation</h1>
+            <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        </div>
+
+        <form class="client-form" id="leadForm">
+            <div class="form-section">
+                <h2>Lead Details</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="websiteType">Website Type</label>
+                        <input type="text" id="websiteType" placeholder="e.g. E-commerce, Portfolio">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactNumber">Contact Number</label>
+                        <input type="tel" id="contactNumber" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailAddress">Email Address</label>
+                        <input type="email" id="emailAddress" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" rows="2"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Existing Website?</label>
+                    <div style="display: flex; gap: 20px; margin-top: 8px;">
+                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
+                            <input type="radio" name="existingWebsite" value="yes"
+                                style="width: auto; margin-right: 8px;"> Yes
+                        </label>
+                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
+                            <input type="radio" name="existingWebsite" value="no" checked
+                                style="width: auto; margin-right: 8px;"> No
+                        </label>
+                    </div>
+                </div>
+
+                <div id="websiteFields" class="hidden">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="websiteUrl">Website URL</label>
+                            <input type="url" id="websiteUrl">
+                        </div>
+                        <div class="form-group">
+                            <label for="websiteImprovement">Website Improvement Thoughts</label>
+                            <input type="text" id="websiteImprovement">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="socialMedia">Social Media Link</label>
+                        <input type="url" id="socialMedia">
+                    </div>
+                    <div class="form-group">
+                        <label for="leadStatus">Lead Status</label>
+                        <select id="leadStatus">
+                            <option value="New">New</option>
+                            <option value="Contacted">Contacted</option>
+                            <option value="Qualified">Qualified</option>
+                            <option value="Lost">Lost</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="businessDescription">Business Description</label>
+                    <textarea id="businessDescription" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Add Lead</button>
+            </div>
+        </form>
+
+        <div class="leads-table-container">
+            <h2>Generated Leads</h2>
+            <table class="leads-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Business Name</th>
+                        <th>Type</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Website</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="leadsTableBody">
+                    <!-- Rows will be added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="security.js"></script>
+    <script>
+        // Toggle Website Fields
+        const websiteFields = document.getElementById('websiteFields');
+        const radioButtons = document.querySelectorAll('input[name="existingWebsite"]');
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                if (e.target.value === 'yes') {
+                    websiteFields.classList.remove('hidden');
+                } else {
+                    websiteFields.classList.add('hidden');
+                }
+            });
+        });
+
+        // Form Submission
+        const form = document.getElementById('leadForm');
+        const tableBody = document.getElementById('leadsTableBody');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const date = new Date().toLocaleString();
+            const businessName = document.getElementById('businessName').value;
+            const websiteType = document.getElementById('websiteType').value;
+            const contactNumber = document.getElementById('contactNumber').value;
+            const emailAddress = document.getElementById('emailAddress').value;
+            const existingWebsite = document.querySelector('input[name="existingWebsite"]:checked').value;
+            let websiteInfo = 'N/A';
+
+            if (existingWebsite === 'yes') {
+                const url = document.getElementById('websiteUrl').value || '';
+                const improvement = document.getElementById('websiteImprovement').value || '';
+                websiteInfo = `${url} <br><small style="color: #64748b;">${improvement}</small>`;
+            }
+
+            const leadStatus = document.getElementById('leadStatus').value;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${date}</td>
+                <td><strong>${businessName}</strong></td>
+                <td>${websiteType}</td>
+                <td>${contactNumber}</td>
+                <td>${emailAddress}</td>
+                <td>${websiteInfo}</td>
+                <td><span style="padding: 4px 8px; background: #f1f5f9; border-radius: 4px; font-size: 12px;">${leadStatus}</span></td>
+            `;
+
+            tableBody.appendChild(row); // FIFO (Append to bottom)
+
+            form.reset();
+            // Reset visibility of website fields
+            websiteFields.classList.add('hidden');
+            document.querySelector('input[name="existingWebsite"][value="no"]').checked = true;
+        });
+    </script>
+</body>
+
+</html>

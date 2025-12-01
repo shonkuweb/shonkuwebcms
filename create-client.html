@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Client Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <img src="images/logo-black.jpg" alt="Logo" class="top-left-logo">
+
+    <div class="main-container">
+        <div class="form-header">
+            <h1>Create Client Profile</h1>
+            <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        </div>
+
+        <form class="client-form">
+            <!-- Client Information -->
+            <div class="form-section">
+                <h2>Client Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clientId">Client ID</label>
+                        <input type="text" id="clientId" name="clientId" placeholder="e.g., CL-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="clientName">Client Name</label>
+                        <input type="text" id="clientName" name="clientName" placeholder="Full Name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyType">Company Type</label>
+                        <select id="companyType" name="companyType">
+                            <option value="">Select Type</option>
+                            <option value="startup">Startup</option>
+                            <option value="sme">SME</option>
+                            <option value="enterprise">Enterprise</option>
+                            <option value="agency">Agency</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientStatus">Status</label>
+                        <select id="clientStatus" name="clientStatus">
+                            <option value="lead">Lead</option>
+                            <option value="active">Active</option>
+                            <option value="on_hold">On Hold</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary Contact -->
+            <div class="form-section">
+                <h2>Primary Contact Person</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactName">Name</label>
+                        <input type="text" id="contactName" name="contactName">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactRole">Role</label>
+                        <input type="text" id="contactRole" name="contactRole"
+                            placeholder="e.g., Owner, Marketing Head">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactEmail">Email</label>
+                        <input type="email" id="contactEmail" name="contactEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactPhone">Phone / WhatsApp</label>
+                        <input type="tel" id="contactPhone" name="contactPhone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="preferredContact">Preferred Contact Method</label>
+                    <select id="preferredContact" name="preferredContact">
+                        <option value="call">Call</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="secondaryContacts">Secondary Contacts</label>
+                    <textarea id="secondaryContacts" name="secondaryContacts" rows="3"
+                        placeholder="List other contacts..."></textarea>
+                </div>
+            </div>
+
+            <!-- Business Details -->
+            <div class="form-section">
+                <h2>Business Details</h2>
+                <div class="form-group">
+                    <label for="clientAddress">Client Address</label>
+                    <input type="text" id="clientAddress" name="clientAddress">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="timezone">Time Zone / Working Hours</label>
+                        <input type="text" id="timezone" name="timezone">
+                    </div>
+                    <div class="form-group">
+                        <label for="industry">Industry / Niche</label>
+                        <input type="text" id="industry" name="industry" placeholder="e.g., Education, Ecommerce">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companySize">Company Size</label>
+                        <select id="companySize" name="companySize">
+                            <option value="solo">Solo</option>
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="source">How they found you</label>
+                        <input type="text" id="source" name="source" placeholder="Referral, Ad, etc.">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="socialMedia">Social Media Links</label>
+                    <textarea id="socialMedia" name="socialMedia" rows="2"
+                        placeholder="FB, Insta, LinkedIn..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="businessDesc">Short Description of Business</label>
+                    <textarea id="businessDesc" name="businessDesc" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Client Priority Tag</label>
+                    <select id="priority" name="priority">
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Project Details -->
+            <div class="form-section">
+                <h2>Project Details</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectName">Project Name</label>
+                        <input type="text" id="projectName" name="projectName">
+                    </div>
+                    <div class="form-group">
+                        <label for="websiteType">Website Type</label>
+                        <select id="websiteType" name="websiteType">
+                            <option value="landing">Landing Page</option>
+                            <option value="ecommerce">E-commerce</option>
+                            <option value="corporate">Corporate</option>
+                            <option value="blog">Blog</option>
+                            <option value="portfolio">Portfolio</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projectStatus">Status</label>
+                    <select id="projectStatus" name="projectStatus">
+                        <option value="lead">Lead</option>
+                        <option value="discussion">In Discussion</option>
+                        <option value="progress">In Progress</option>
+                        <option value="revision">Revision</option>
+                        <option value="completed">Completed</option>
+                        <option value="hold">On Hold</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate" name="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate" name="endDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="projectLink">Quick Link to Full Project Details</label>
+                    <input type="url" id="projectLink" name="projectLink">
+                </div>
+            </div>
+
+            <!-- Financials & Secret Links -->
+            <div class="form-section">
+                <h2>Financials & Extras</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="invoiceLink">Invoice Link</label>
+                        <input type="url" id="invoiceLink" name="invoiceLink">
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentCode">Payment Code</label>
+                        <input type="text" id="paymentCode" name="paymentCode">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="totalPayment">Total Payment</label>
+                        <input type="number" id="totalPayment" name="totalPayment">
+                    </div>
+                    <div class="form-group">
+                        <label for="advancePayment">Advance Payment</label>
+                        <input type="number" id="advancePayment" name="advancePayment">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="duePayment">Due Payment</label>
+                        <input type="number" id="duePayment" name="duePayment">
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentStatus">Payment Status</label>
+                        <select id="paymentStatus" name="paymentStatus">
+                            <option value="pending">Pending</option>
+                            <option value="partial">Partial</option>
+                            <option value="paid">Paid</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="secretLinks">Project Secret Links</label>
+                    <textarea id="secretLinks" name="secretLinks" rows="3"
+                        placeholder="Admin access, credentials, etc."></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Create Profile</button>
+                <button type="button" class="btn-secondary"
+                    onclick="window.location.href='dashboard.html'">Cancel</button>
+            </div>
+        </form>
+    </div>
+    <script src="security.js"></script>
+</body>
+
+</html>
