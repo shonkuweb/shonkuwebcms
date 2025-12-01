@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lead Generation</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -184,7 +184,7 @@
 
             // Find or create category section
             let categoryRow = document.getElementById(`cat-${websiteType.replace(/\s+/g, '-')}`);
-            
+
             if (!categoryRow) {
                 // Create category header row
                 categoryRow = document.createElement('tr');
@@ -214,18 +214,18 @@
             // Simple approach: append to tableBody, but we need to group them.
             // To group them visually without complex sorting, we can insert the new row immediately after the category header
             // OR find the last row of this category and insert after it. 
-            
+
             // Let's try inserting after the category header (LIFO for the group?) No, user wants FIFO.
             // So we need to find the last element of this group.
-            
+
             let lastRowInGroup = categoryRow;
             let nextSibling = categoryRow.nextElementSibling;
-            
-            while(nextSibling && !nextSibling.classList.contains('category-header')) {
+
+            while (nextSibling && !nextSibling.classList.contains('category-header')) {
                 lastRowInGroup = nextSibling;
                 nextSibling = nextSibling.nextElementSibling;
             }
-            
+
             if (lastRowInGroup.nextSibling) {
                 tableBody.insertBefore(row, lastRowInGroup.nextSibling);
             } else {
