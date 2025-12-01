@@ -47,8 +47,8 @@ body {
 }
 
 .logo-icon {
-    width: 64px;
-    height: 64px;
+    width: 70px;
+    height: 70px;
     background-color: white;
     border-radius: 16px;
     display: flex;
@@ -308,6 +308,7 @@ body {
     gap: 16px;
     margin-top: 40px;
     padding-top: 20px;
+    justify-content: flex-end;
 }
 
 .btn-primary {
@@ -407,6 +408,8 @@ body {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
+    min-width: 800px;
+    /* Force scroll on small screens */
 }
 
 .client-table th {
@@ -468,6 +471,44 @@ body {
     border-color: #cbd5e1;
 }
 
+/* Leads Table Styles */
+.leads-table-container {
+    margin-top: 40px;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+
+.leads-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1000px;
+}
+
+.leads-table th,
+.leads-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 14px;
+}
+
+.leads-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.leads-table tr:last-child td {
+    border-bottom: none;
+}
+
+.hidden {
+    display: none;
+}
+
 /* Dashboard Actions */
 .dashboard-actions {
     margin-top: 32px;
@@ -501,6 +542,8 @@ body {
     .main-container {
         margin: 80px auto 40px;
         padding: 0 16px;
+        width: 100%;
+        /* Ensure full width */
     }
 
     .form-header {
@@ -513,8 +556,15 @@ body {
         font-size: 24px;
     }
 
-    .client-form {
-        padding: 24px;
+    .client-form,
+    .client-list-container,
+    .leads-table-container {
+        padding: 20px;
+        /* Reduced padding */
+        width: 100%;
+        /* Ensure full width */
+        border-radius: 16px;
+        /* Slightly smaller radius */
     }
 
     .form-row {
@@ -549,6 +599,16 @@ body {
 
     .login-card {
         padding: 30px 20px;
+    }
+
+    /* Ensure tables scroll */
+    .table-responsive,
+    .leads-table-container {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        /* Smooth scroll on iOS */
     }
 }
 

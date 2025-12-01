@@ -9,44 +9,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .leads-table-container {
-            margin-top: 40px;
-            background: white;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            overflow-x: auto;
-        }
-
-        .leads-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1000px;
-        }
-
-        .leads-table th,
-        .leads-table td {
-            padding: 12px 16px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-            font-size: 14px;
-        }
-
-        .leads-table th {
-            background-color: #f8fafc;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .leads-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .hidden {
-            display: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -68,7 +30,21 @@
                     </div>
                     <div class="form-group">
                         <label for="websiteType">Website Type</label>
-                        <input type="text" id="websiteType" placeholder="e.g. E-commerce, Portfolio">
+                        <select id="websiteType" required>
+                            <option value="" disabled selected>Select Website Type</option>
+                            <option value="Business Website">Business Website</option>
+                            <option value="E-commerce Website">E-commerce Website</option>
+                            <option value="Portfolio Website">Portfolio Website</option>
+                            <option value="Blog Website">Blog Website</option>
+                            <option value="Educational Website">Educational Website</option>
+                            <option value="Social Media Website">Social Media Website</option>
+                            <option value="Entertainment / Media Website">Entertainment / Media Website</option>
+                            <option value="News Website">News Website</option>
+                            <option value="Non-profit / NGO Website">Non-profit / NGO Website</option>
+                            <option value="Landing Page">Landing Page</option>
+                            <option value="Personal Website">Personal Website</option>
+                            <option value="Web Application">Web Application</option>
+                        </select>
                     </div>
                 </div>
 
@@ -147,6 +123,7 @@
             <table class="leads-table">
                 <thead>
                     <tr>
+                        <th>S.No.</th>
                         <th>Date</th>
                         <th>Business Name</th>
                         <th>Type</th>
@@ -164,6 +141,7 @@
     </div>
 
     <script src="security.js"></script>
+    <script src="drag-scroll.js"></script>
     <script>
         // Toggle Website Fields
         const websiteFields = document.getElementById('websiteFields');
@@ -182,10 +160,12 @@
         // Form Submission
         const form = document.getElementById('leadForm');
         const tableBody = document.getElementById('leadsTableBody');
+        let leadCounter = 0;
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            leadCounter++;
             const date = new Date().toLocaleString();
             const businessName = document.getElementById('businessName').value;
             const websiteType = document.getElementById('websiteType').value;
@@ -202,8 +182,25 @@
 
             const leadStatus = document.getElementById('leadStatus').value;
 
+            // Find or create category section
+            let categoryRow = document.getElementById(`cat-${websiteType.replace(/\s+/g, '-')}`);
+            
+            if (!categoryRow) {
+                // Create category header row
+                categoryRow = document.createElement('tr');
+                categoryRow.id = `cat-${websiteType.replace(/\s+/g, '-')}`;
+                categoryRow.className = 'category-header';
+                categoryRow.innerHTML = `
+                    <td colspan="8" style="background-color: #f1f5f9; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; padding: 16px;">
+                        ${websiteType}
+                    </td>
+                `;
+                tableBody.appendChild(categoryRow);
+            }
+
             const row = document.createElement('tr');
             row.innerHTML = `
+                <td>${leadCounter}</td>
                 <td>${date}</td>
                 <td><strong>${businessName}</strong></td>
                 <td>${websiteType}</td>
@@ -213,7 +210,27 @@
                 <td><span style="padding: 4px 8px; background: #f1f5f9; border-radius: 4px; font-size: 12px;">${leadStatus}</span></td>
             `;
 
-            tableBody.appendChild(row); // FIFO (Append to bottom)
+            // Insert after the category header or the last item in this category
+            // Simple approach: append to tableBody, but we need to group them.
+            // To group them visually without complex sorting, we can insert the new row immediately after the category header
+            // OR find the last row of this category and insert after it. 
+            
+            // Let's try inserting after the category header (LIFO for the group?) No, user wants FIFO.
+            // So we need to find the last element of this group.
+            
+            let lastRowInGroup = categoryRow;
+            let nextSibling = categoryRow.nextElementSibling;
+            
+            while(nextSibling && !nextSibling.classList.contains('category-header')) {
+                lastRowInGroup = nextSibling;
+                nextSibling = nextSibling.nextElementSibling;
+            }
+            
+            if (lastRowInGroup.nextSibling) {
+                tableBody.insertBefore(row, lastRowInGroup.nextSibling);
+            } else {
+                tableBody.appendChild(row);
+            }
 
             form.reset();
             // Reset visibility of website fields
