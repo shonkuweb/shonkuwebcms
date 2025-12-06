@@ -15,6 +15,7 @@
     <img src="images/logo-black.jpg" alt="Logo" class="top-left-logo">
 
     <div class="main-container">
+        <div id="toastContainer" class="toast-container"></div>
         <div class="form-header">
             <h1>Lead Generation</h1>
             <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
@@ -32,18 +33,21 @@
                         <label for="websiteType">Website Type</label>
                         <select id="websiteType" required>
                             <option value="" disabled selected>Select Website Type</option>
-                            <option value="Business Website">Business Website</option>
                             <option value="E-commerce Website">E-commerce Website</option>
+                            <option value="Business Website">Business Website</option>
                             <option value="Portfolio Website">Portfolio Website</option>
                             <option value="Blog Website">Blog Website</option>
-                            <option value="Educational Website">Educational Website</option>
-                            <option value="Social Media Website">Social Media Website</option>
-                            <option value="Entertainment / Media Website">Entertainment / Media Website</option>
                             <option value="News Website">News Website</option>
-                            <option value="Non-profit / NGO Website">Non-profit / NGO Website</option>
-                            <option value="Landing Page">Landing Page</option>
+                            <option value="Educational Website">Educational Website</option>
+                            <option value="Social Networking Website">Social Networking Website</option>
+                            <option value="Forum / Community Website">Forum / Community Website</option>
+                            <option value="Non-Profit Website">Non-Profit Website</option>
+                            <option value="Government Website">Government Website</option>
+                            <option value="Entertainment Website">Entertainment Website</option>
                             <option value="Personal Website">Personal Website</option>
                             <option value="Web Application">Web Application</option>
+                            <option value="Landing Page">Landing Page</option>
+                            <option value="Directory / Listing Website">Directory / Listing Website</option>
                         </select>
                     </div>
                 </div>
@@ -51,7 +55,8 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="contactNumber">Contact Number</label>
-                        <input type="tel" id="contactNumber" required>
+                        <input type="tel" id="contactNumber" required maxlength="10"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
                     </div>
                     <div class="form-group">
                         <label for="emailAddress">Email Address</label>
@@ -61,7 +66,7 @@
 
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <textarea id="address" rows="2"></textarea>
+                    <textarea id="address" rows="2" required></textarea>
                 </div>
 
                 <div class="form-group">
@@ -82,7 +87,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="websiteUrl">Website URL</label>
-                            <input type="url" id="websiteUrl">
+                            <input type="text" id="websiteUrl">
                         </div>
                         <div class="form-group">
                             <label for="websiteImprovement">Website Improvement Thoughts</label>
@@ -94,7 +99,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="socialMedia">Social Media Link</label>
-                        <input type="url" id="socialMedia">
+                        <input type="text" id="socialMedia">
                     </div>
                     <div class="form-group">
                         <label for="leadStatus">Lead Status</label>
@@ -109,7 +114,12 @@
 
                 <div class="form-group">
                     <label for="businessDescription">Business Description</label>
-                    <textarea id="businessDescription" rows="3"></textarea>
+                    <textarea id="businessDescription" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="remarks">Remarks</label>
+                    <input type="text" id="remarks" placeholder="Add remarks..." required>
                 </div>
             </div>
 
@@ -130,7 +140,9 @@
                         <th>Contact</th>
                         <th>Email</th>
                         <th>Website</th>
+                        <th>Remarks</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="leadsTableBody">
@@ -142,7 +154,9 @@
 
     <script src="security.js"></script>
     <script src="drag-scroll.js"></script>
-    <script>
+    <script type="module">
+        import { db, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from './firebase-config.js';
+
         // Toggle Website Fields
         const websiteFields = document.getElementById('websiteFields');
         const radioButtons = document.querySelectorAll('input[name="existingWebsite"]');
@@ -157,67 +171,204 @@
             });
         });
 
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerText = message;
+
+            container.appendChild(toast);
+
+            // Remove after animation (3s total: 0.3s in + 2.4s wait + 0.3s out)
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
         // Form Submission
         const form = document.getElementById('leadForm');
         const tableBody = document.getElementById('leadsTableBody');
-        let leadCounter = 0;
+        let editingRowId = null; // Track ID of row being edited
 
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            leadCounter++;
-            const date = new Date().toLocaleString();
             const businessName = document.getElementById('businessName').value;
             const websiteType = document.getElementById('websiteType').value;
             const contactNumber = document.getElementById('contactNumber').value;
             const emailAddress = document.getElementById('emailAddress').value;
             const existingWebsite = document.querySelector('input[name="existingWebsite"]:checked').value;
-            let websiteInfo = 'N/A';
+            const remarks = document.getElementById('remarks').value;
+            const businessDescription = document.getElementById('businessDescription').value;
+
+            let websiteUrl = '';
+            let websiteImprovement = '';
 
             if (existingWebsite === 'yes') {
-                const url = document.getElementById('websiteUrl').value || '';
-                const improvement = document.getElementById('websiteImprovement').value || '';
-                websiteInfo = `${url} <br><small style="color: #64748b;">${improvement}</small>`;
+                websiteUrl = document.getElementById('websiteUrl').value || '';
+                websiteImprovement = document.getElementById('websiteImprovement').value || '';
+
+                // Validate fields if Yes is selected
+                if (!websiteUrl) {
+                    showNotification('Please enter a Website URL', 'error');
+                    return;
+                }
+                if (!websiteImprovement) {
+                    showNotification('Please enter improvement thoughts', 'error');
+                    return;
+                }
             }
 
             const leadStatus = document.getElementById('leadStatus').value;
 
+            const leadData = {
+                businessName,
+                websiteType,
+                contactNumber,
+                emailAddress,
+                existingWebsite,
+                websiteUrl,
+                websiteImprovement,
+                leadStatus,
+                remarks,
+                businessDescription,
+                updatedAt: serverTimestamp()
+            };
+
+            try {
+                if (editingRowId) {
+                    // Update existing document
+                    const leadRef = doc(db, "leads", editingRowId);
+                    await updateDoc(leadRef, leadData);
+
+                    editingRowId = null;
+                    document.querySelector('button[type="submit"]').textContent = 'Add Lead';
+                    showNotification('Lead updated successfully!');
+                } else {
+                    // Add new document
+                    leadData.createdAt = serverTimestamp();
+                    await addDoc(collection(db, "leads"), leadData);
+                    showNotification('Lead added successfully!');
+                }
+                resetForm();
+            } catch (error) {
+                console.error("Error adding/updating document: ", error);
+                showNotification("Error saving lead: " + error.message, 'error');
+            }
+        });
+
+        // Real-time listener
+        const q = query(collection(db, "leads"), orderBy("createdAt", "asc"));
+
+        onSnapshot(q, (snapshot) => {
+            tableBody.innerHTML = ''; // Clear table
+            // We need to re-group by category manually since we clear table.
+            // A simple map to track created category headers could work, 
+            // OR we just iterate and insert like before but fully recreated.
+
+            // let's categorize data first? 
+            // Actually, the previous logic inserted rows under categories. 
+            // To maintain that structure with snapshot data:
+            // We can iterate snapshot docs, for each doc, ensure category header exists, then append row.
+
+            let counter = 0;
+            const existingCategories = new Set();
+
+            // Note: If we want to group purely by category, the default date sort might split them if 
+            // leads of same category are added at different times. 
+            // However, the prompt implies a table list. 
+            // The previous implementation was: If category exists, append. Else create.
+            // This groups them effectively if we trust the loop order.
+            // If we blindly loop through date-sorted docs, we might get:
+            // Cat A - Item 1
+            // Cat B - Item 2
+            // Cat A - Item 3 (New Header? Or append to first Cat A?)
+            // The previous logic `insertRow` handled finding the correct spot.
+            // So we can reuse `insertRow` logic but we need to pass the doc ID for edit/delete.
+
+            snapshot.forEach((docSnap) => {
+                counter++;
+                const data = docSnap.data();
+                const id = docSnap.id;
+
+                // Format date
+                let dateStr = 'Just now';
+                if (data.createdAt) {
+                    dateStr = new Date(data.createdAt.seconds * 1000).toLocaleString();
+                }
+
+                // Prepare display values
+                let websiteInfo = 'N/A';
+                if (data.existingWebsite === 'yes') {
+                    websiteInfo = `${data.websiteUrl} <br><small style="color: #64748b;">${data.websiteImprovement}</small>`;
+                }
+
+                // We pass raw data slightly differently now, or just use data object
+                // Let's create row element
+                const row = createRowElement(id, counter, dateStr, data, websiteInfo);
+                insertRow(row, data.websiteType);
+            });
+        });
+
+
+        window.createRowElement = function (id, counter, date, data, websiteDisplay) {
+            const row = document.createElement('tr');
+            row.dataset.id = id; // Store doc ID on row
+            row.dataset.raw = JSON.stringify(data); // Store full data for easy edit populate
+
+            // Status Options
+            const pd = ["New", "Contacted", "Qualified", "Lost"];
+            let statusOptions = "";
+            pd.forEach(s => {
+                statusOptions += `<option value="${s}" ${s === data.leadStatus ? "selected" : ""}>${s}</option>`;
+            });
+
+            // Escape single quotes in websiteRaw to prevent breaking HTML attribute
+            const safeWebsiteRaw = row.dataset.raw ? row.dataset.raw.replace(/'/g, "&apos;") : "";
+
+            row.innerHTML = `
+                <td>${counter}</td>
+                <td>${date}</td>
+                <td><strong>${data.businessName}</strong></td>
+                <td>${data.websiteType}</td>
+                <td>${data.contactNumber}</td>
+                <td>${data.emailAddress}</td>
+                <td>${websiteDisplay}</td>
+                <td><input type="text" class="remarks-input" value="${data.remarks || ''}" placeholder="Add remarks" onchange="updateInline('${id}', 'remarks', this.value)"></td>
+                <td>
+                    <select class="status-select" onchange="updateInline('${id}', 'leadStatus', this.value)">
+                        ${statusOptions}
+                    </select>
+                </td>
+                <td>
+                    <button type="button" onclick="editLead('${id}')" class="btn-action btn-edit">Edit</button>
+                    <button type="button" onclick="deleteLead('${id}')" class="btn-action btn-delete">Delete</button>
+                </td>
+            `;
+            return row;
+        }
+
+        window.insertRow = function (row, category) {
             // Find or create category section
-            let categoryRow = document.getElementById(`cat-${websiteType.replace(/\s+/g, '-')}`);
+            let categoryRow = document.getElementById(`cat-${category.replace(/\s+/g, '-')}`);
 
             if (!categoryRow) {
                 // Create category header row
                 categoryRow = document.createElement('tr');
-                categoryRow.id = `cat-${websiteType.replace(/\s+/g, '-')}`;
+                categoryRow.id = `cat-${category.replace(/\s+/g, '-')}`;
                 categoryRow.className = 'category-header';
                 categoryRow.innerHTML = `
-                    <td colspan="8" style="background-color: #f1f5f9; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; padding: 16px;">
-                        ${websiteType}
+                    <td colspan="10" style="background-color: #f1f5f9; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; padding: 16px;">
+                        ${category}
                     </td>
                 `;
                 tableBody.appendChild(categoryRow);
             }
 
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${leadCounter}</td>
-                <td>${date}</td>
-                <td><strong>${businessName}</strong></td>
-                <td>${websiteType}</td>
-                <td>${contactNumber}</td>
-                <td>${emailAddress}</td>
-                <td>${websiteInfo}</td>
-                <td><span style="padding: 4px 8px; background: #f1f5f9; border-radius: 4px; font-size: 12px;">${leadStatus}</span></td>
-            `;
-
-            // Insert after the category header or the last item in this category
-            // Simple approach: append to tableBody, but we need to group them.
-            // To group them visually without complex sorting, we can insert the new row immediately after the category header
-            // OR find the last row of this category and insert after it. 
-
-            // Let's try inserting after the category header (LIFO for the group?) No, user wants FIFO.
-            // So we need to find the last element of this group.
-
+            // Insert logic
             let lastRowInGroup = categoryRow;
             let nextSibling = categoryRow.nextElementSibling;
 
@@ -231,12 +382,79 @@
             } else {
                 tableBody.appendChild(row);
             }
+        }
 
+        // Exposed functions for inline events (attached to window because module scope is private)
+        window.deleteLead = async function (id) {
+            // No confirmation - immediate delete
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            if (row) {
+                row.remove(); // Remove from DOM immediately
+            }
+
+            try {
+                await deleteDoc(doc(db, "leads", id));
+                // No popup for delete as per request
+            } catch (e) {
+                console.error("Error deleting: ", e);
+                // Only show error if it fails
+                showNotification("Failed to delete from database.", 'error');
+            }
+        }
+
+        window.editLead = function (id) {
+            // Find row by dataset id is safest? Or just pass data?
+            // Since we reload table on snapshot, the row might have changed if we rely on DOM object.
+            // But for simple "populate form", getting data from DOM is fine.
+            const row = document.querySelector(`tr[data-id="${id}"]`);
+            if (!row) return;
+
+            const data = JSON.parse(row.dataset.raw);
+            editingRowId = id; // Set global ID
+
+            // Populate form
+            document.getElementById('businessName').value = data.businessName;
+            document.getElementById('websiteType').value = data.websiteType;
+            document.getElementById('contactNumber').value = data.contactNumber;
+            document.getElementById('emailAddress').value = data.emailAddress;
+            document.getElementById('leadStatus').value = data.leadStatus;
+            document.getElementById('remarks').value = data.remarks || '';
+            document.getElementById('businessDescription').value = data.businessDescription || '';
+
+            if (data.existingWebsite === 'yes') {
+                document.querySelector('input[name="existingWebsite"][value="yes"]').click();
+                document.getElementById('websiteUrl').value = data.websiteUrl;
+                document.getElementById('websiteImprovement').value = data.websiteImprovement;
+            } else {
+                document.querySelector('input[name="existingWebsite"][value="no"]').click();
+            }
+
+            document.querySelector('button[type="submit"]').textContent = 'Update Lead';
+            document.querySelector('.form-header').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.updateInline = async function (id, field, value) {
+            try {
+                const leadRef = doc(db, "leads", id);
+                await updateDoc(leadRef, {
+                    [field]: value,
+                    updatedAt: serverTimestamp()
+                });
+            } catch (e) {
+                console.error("Inline update failed: ", e);
+                // Optionally revert UI? 
+            }
+        }
+
+        window.resetForm = function () {
             form.reset();
-            // Reset visibility of website fields
             websiteFields.classList.add('hidden');
             document.querySelector('input[name="existingWebsite"][value="no"]').checked = true;
-        });
+            if (editingRowId) {
+                editingRowId = null;
+                document.querySelector('button[type="submit"]').textContent = 'Add Lead';
+            }
+        }
     </script>
 </body>
 
