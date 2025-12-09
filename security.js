@@ -1,7 +1,13 @@
+// ============================================
+// Security Measures (Basic Client-Side Protection)
+// ============================================
+
+// Prevent Right-Click Context Menu
 document.addEventListener('contextmenu', function (e) {
     e.preventDefault();
 });
 
+// Prevent Developer Tools & Source View Shortcuts
 document.addEventListener('keydown', function (e) {
     // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
     if (e.key === 'F12' ||
@@ -11,9 +17,9 @@ document.addEventListener('keydown', function (e) {
         e.preventDefault();
     }
 
-    // Attempt to block Print Screen
+    // Attempt to block Print Screen Key
     if (e.key === 'PrintScreen') {
-        navigator.clipboard.writeText('');
+        navigator.clipboard.writeText(''); // Clear clipboard
         alert('Screenshots are disabled!');
         e.preventDefault();
     }
@@ -25,6 +31,7 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+// Additional listener for Print Screen removal (keyup)
 document.addEventListener('keyup', (e) => {
     if (e.key == 'PrintScreen') {
         navigator.clipboard.writeText('');

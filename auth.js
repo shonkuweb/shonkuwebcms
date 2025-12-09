@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Select DOM elements
     const loginButton = document.querySelector('.sign-in-btn');
     const passwordInput = document.getElementById('password');
 
+    // Handle Login Button Click
     loginButton.addEventListener('click', () => {
         const enteredPassword = passwordInput.value;
+        // Verify password against local config
         if (enteredPassword === CONFIG.password) {
             window.location.href = 'dashboard.html';
         } else {
@@ -18,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Toggle password visibility
+    // Toggle password visibility (Text/Password)
     const togglePasswordButton = document.querySelector('.toggle-password');
     togglePasswordButton.addEventListener('click', () => {
         const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';

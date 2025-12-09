@@ -12,17 +12,21 @@
 </head>
 
 <body>
+    <!-- Login Container: Centered box for the login form -->
     <div class="login-container">
         <div class="login-card">
+            <!-- Logo Section -->
             <div class="logo-container">
                 <div class="logo-icon">
                     <img src="images/logo.jpg" alt="Logo" width="40" height="40">
                 </div>
             </div>
 
+            <!-- Welcome Message -->
             <h1 class="welcome-title">Welcome Back</h1>
             <p class="welcome-subtitle">Please enter your password to continue</p>
 
+            <!-- Password Input Section with Toggle Visibility -->
             <div class="input-group">
                 <label for="password">Password</label>
                 <div class="password-wrapper">
@@ -41,11 +45,15 @@
 
 
 
+            <!-- Sign In Button -->
             <button class="sign-in-btn">Sign In</button>
         </div>
     </div>
+    <!-- Load Configuration (Password) -->
     <script src="config.js"></script>
+    <!-- Load Authentication Logic -->
     <script src="auth.js"></script>
+    <!-- Load Security Features (Anti-copy/paste, etc.) -->
     <script src="security.js"></script>
 </body>
 

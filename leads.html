@@ -15,12 +15,16 @@
     <img src="images/logo-black.jpg" alt="Logo" class="top-left-logo">
 
     <div class="main-container">
+        <!-- Toast Notification Container -->
         <div id="toastContainer" class="toast-container"></div>
+
+        <!-- Page Header -->
         <div class="form-header">
             <h1>Lead Generation</h1>
             <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
         </div>
 
+        <!-- Lead Entry Form -->
         <form class="client-form" id="leadForm">
             <div class="form-section">
                 <h2>Lead Details</h2>
@@ -69,6 +73,7 @@
                     <textarea id="address" rows="2" required></textarea>
                 </div>
 
+                <!-- Existing Website Toggle -->
                 <div class="form-group">
                     <label>Existing Website?</label>
                     <div style="display: flex; gap: 20px; margin-top: 8px;">
@@ -128,6 +133,89 @@
             </div>
         </form>
 
+
+        <!-- Search Box -->
+        <div class="search-wrapper">
+            <div class="search-container">
+                <div class="search-input-field">
+                    <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="searchInput" class="search-input"
+                        placeholder="Search by Business, Mobile, or Email...">
+                    <div id="suggestionsBox" class="suggestions-box"></div>
+                </div>
+
+                <button type="button" class="btn-filter" id="filterBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                    </svg>
+                    Filter
+                </button>
+
+                <!-- Filter Panel -->
+                <div class="filter-panel" id="filterPanel">
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label>Date Range</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="date" id="filterDateStart">
+                                <input type="date" id="filterDateEnd">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label>Category</label>
+                            <select id="filterCategory">
+                                <option value="">All Categories</option>
+                                <option value="E-commerce Website">E-commerce Website</option>
+                                <option value="Business Website">Business Website</option>
+                                <option value="Portfolio Website">Portfolio Website</option>
+                                <option value="Blog Website">Blog Website</option>
+                                <option value="News Website">News Website</option>
+                                <option value="Educational Website">Educational Website</option>
+                                <option value="Social Networking Website">Social Networking Website</option>
+                                <option value="Forum / Community Website">Forum / Community Website</option>
+                                <option value="Non-Profit Website">Non-Profit Website</option>
+                                <option value="Government Website">Government Website</option>
+                                <option value="Entertainment Website">Entertainment Website</option>
+                                <option value="Personal Website">Personal Website</option>
+                                <option value="Web Application">Web Application</option>
+                                <option value="Landing Page">Landing Page</option>
+                                <option value="Directory / Listing Website">Directory / Listing Website</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Existing Website</label>
+                            <select id="filterWebsite">
+                                <option value="">Any</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>Status</label>
+                            <select id="filterStatus">
+                                <option value="">All Statuses</option>
+                                <option value="New">New</option>
+                                <option value="Contacted">Contacted</option>
+                                <option value="Qualified">Qualified</option>
+                                <option value="Lost">Lost</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="filter-actions">
+                        <button type="button" class="btn-clear" id="clearFiltersBtn">Clear Filters</button>
+                        <button type="button" class="btn-apply" id="applyFiltersBtn">Apply Filters</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leads Display Table -->
         <div class="leads-table-container">
             <h2>Generated Leads</h2>
             <table class="leads-table">
@@ -155,14 +243,16 @@
     <script src="security.js"></script>
     <script src="drag-scroll.js"></script>
     <script type="module">
+        // Import Firebase Functions
         import { db, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from './firebase-config.js';
 
-        // Toggle Website Fields
+        // Toggle Website Fields Visibility
         const websiteFields = document.getElementById('websiteFields');
         const radioButtons = document.querySelectorAll('input[name="existingWebsite"]');
 
         radioButtons.forEach(radio => {
             radio.addEventListener('change', (e) => {
+                // Show fields if 'Yes', hide if 'No'
                 if (e.target.value === 'yes') {
                     websiteFields.classList.remove('hidden');
                 } else {
@@ -188,7 +278,7 @@
             }, 3000);
         }
 
-        // Form Submission
+        // Form Submission Handler (Add or Update Lead)
         const form = document.getElementById('leadForm');
         const tableBody = document.getElementById('leadsTableBody');
         let editingRowId = null; // Track ID of row being edited
@@ -196,6 +286,7 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Collect form data
             const businessName = document.getElementById('businessName').value;
             const websiteType = document.getElementById('websiteType').value;
             const contactNumber = document.getElementById('contactNumber').value;
@@ -207,6 +298,7 @@
             let websiteUrl = '';
             let websiteImprovement = '';
 
+            // Handle conditional fields
             if (existingWebsite === 'yes') {
                 websiteUrl = document.getElementById('websiteUrl').value || '';
                 websiteImprovement = document.getElementById('websiteImprovement').value || '';
@@ -224,6 +316,7 @@
 
             const leadStatus = document.getElementById('leadStatus').value;
 
+            // Prepare data object
             const leadData = {
                 businessName,
                 websiteType,
@@ -240,7 +333,7 @@
 
             try {
                 if (editingRowId) {
-                    // Update existing document
+                    // Update existing document in Firestore
                     const leadRef = doc(db, "leads", editingRowId);
                     await updateDoc(leadRef, leadData);
 
@@ -248,78 +341,254 @@
                     document.querySelector('button[type="submit"]').textContent = 'Add Lead';
                     showNotification('Lead updated successfully!');
                 } else {
-                    // Add new document
+                    // Add new document to Firestore
                     leadData.createdAt = serverTimestamp();
                     await addDoc(collection(db, "leads"), leadData);
                     showNotification('Lead added successfully!');
                 }
-                resetForm();
+                resetForm(); // Clear form
             } catch (error) {
                 console.error("Error adding/updating document: ", error);
                 showNotification("Error saving lead: " + error.message, 'error');
             }
         });
 
-        // Real-time listener
+        // Global state for leads
+        let allLeads = [];
+
+        // Real-time Firestore Listener
         const q = query(collection(db, "leads"), orderBy("createdAt", "asc"));
 
         onSnapshot(q, (snapshot) => {
-            tableBody.innerHTML = ''; // Clear table
-            // We need to re-group by category manually since we clear table.
-            // A simple map to track created category headers could work, 
-            // OR we just iterate and insert like before but fully recreated.
+            allLeads = []; // Reset global list
+            snapshot.forEach((docSnap) => {
+                allLeads.push({ id: docSnap.id, ...docSnap.data() });
+            });
+            renderTable(allLeads);
+        });
 
-            // let's categorize data first? 
-            // Actually, the previous logic inserted rows under categories. 
-            // To maintain that structure with snapshot data:
-            // We can iterate snapshot docs, for each doc, ensure category header exists, then append row.
+        // Search & Filter Logic
+        const searchInput = document.getElementById('searchInput');
+        const suggestionsBox = document.getElementById('suggestionsBox');
+
+        // Filter Elements
+        const filterBtn = document.getElementById('filterBtn');
+        const filterPanel = document.getElementById('filterPanel');
+        const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+        const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+
+        let activeFilters = {
+            dateStart: '',
+            dateEnd: '',
+            category: '',
+            website: '',
+            status: ''
+        };
+
+        // Toggle Filter Panel
+        filterBtn.addEventListener('click', () => {
+            filterPanel.classList.toggle('show');
+            filterBtn.classList.toggle('active');
+        });
+
+        // Apply Filters
+        applyFiltersBtn.addEventListener('click', () => {
+            activeFilters = {
+                dateStart: document.getElementById('filterDateStart').value,
+                dateEnd: document.getElementById('filterDateEnd').value,
+                category: document.getElementById('filterCategory').value,
+                website: document.getElementById('filterWebsite').value,
+                status: document.getElementById('filterStatus').value
+            };
+
+            filterPanel.classList.remove('show');
+            filterBtn.classList.remove('active');
+
+            applySearchAndFilters();
+        });
+
+        // Clear Filters
+        clearFiltersBtn.addEventListener('click', () => {
+            document.getElementById('filterDateStart').value = '';
+            document.getElementById('filterDateEnd').value = '';
+            document.getElementById('filterCategory').value = '';
+            document.getElementById('filterWebsite').value = '';
+            document.getElementById('filterStatus').value = '';
+
+            activeFilters = {
+                dateStart: '',
+                dateEnd: '',
+                category: '',
+                website: '',
+                status: ''
+            };
+
+            filterPanel.classList.remove('show');
+            filterBtn.classList.remove('active');
+
+            applySearchAndFilters();
+        });
+
+        searchInput.addEventListener('input', () => {
+            applySearchAndFilters();
+        });
+
+        // Main Filtering Function
+        function applySearchAndFilters(specificQuery = null) {
+            const query = specificQuery !== null ? specificQuery : searchInput.value.toLowerCase().trim();
+
+            let filteredResults = allLeads;
+
+            // 1. Apply Search Query
+            if (query.length > 0) {
+                filteredResults = filteredResults.filter(lead => {
+                    const business = (lead.businessName || '').toLowerCase();
+                    const contact = (lead.contactNumber || '').toLowerCase();
+                    const email = (lead.emailAddress || '').toLowerCase();
+                    return business.includes(query) || contact.includes(query) || email.includes(query);
+                });
+            }
+
+            // 2. Apply Filters
+            if (activeFilters.category) {
+                filteredResults = filteredResults.filter(lead => lead.websiteType === activeFilters.category);
+            }
+
+            if (activeFilters.status) {
+                filteredResults = filteredResults.filter(lead => lead.leadStatus === activeFilters.status);
+            }
+
+            if (activeFilters.website) {
+                filteredResults = filteredResults.filter(lead => lead.existingWebsite === activeFilters.website);
+            }
+
+            if (activeFilters.dateStart) {
+                const startDate = new Date(activeFilters.dateStart);
+                startDate.setHours(0, 0, 0, 0); // Start of day
+                filteredResults = filteredResults.filter(lead => {
+                    if (!lead.createdAt) return false;
+                    const leadDate = new Date(lead.createdAt.seconds * 1000);
+                    return leadDate >= startDate;
+                });
+            }
+
+            if (activeFilters.dateEnd) {
+                const endDate = new Date(activeFilters.dateEnd);
+                endDate.setHours(23, 59, 59, 999); // End of day
+                filteredResults = filteredResults.filter(lead => {
+                    if (!lead.createdAt) return false;
+                    const leadDate = new Date(lead.createdAt.seconds * 1000);
+                    return leadDate <= endDate;
+                });
+            }
+
+            // Update Suggestions (only based on text search, ignoring filters for suggestions to keep it useful? 
+            // Or should suggestions only show what matches filters? standard is suggestions help you search, so usually global.
+            // But let's keep suggestions consistent with what the user sees.)
+            if (query.length > 0 && specificQuery === null) {
+                const suggestions = filteredResults.slice(0, 5);
+                if (suggestions.length > 0) {
+                    suggestionsBox.innerHTML = suggestions.map(lead => `
+                        <div class="suggestion-item" onclick="selectSuggestion('${lead.businessName}')">
+                            <div>
+                                <div class="suggestion-main">${lead.businessName}</div>
+                                <div class="suggestion-sub">${lead.contactNumber} • ${lead.emailAddress}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    suggestionsBox.innerHTML = '<div class="suggestion-item"><div class="suggestion-sub">No matches found</div></div>';
+                }
+            } else {
+                suggestionsBox.innerHTML = '';
+            }
+
+            renderTable(filteredResults, query);
+        }
+
+        // Close suggestions on click outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                suggestionsBox.innerHTML = '';
+            }
+            // Close filter panel if clicked outside
+            if (!filterPanel.contains(e.target) && !filterBtn.contains(e.target)) {
+                filterPanel.classList.remove('show');
+                filterBtn.classList.remove('active');
+            }
+        });
+
+        window.selectSuggestion = function (name) {
+            searchInput.value = name;
+            suggestionsBox.innerHTML = '';
+            applySearchAndFilters(name.toLowerCase());
+        };
+
+        // Render Table Function
+        function renderTable(leadsToRender, highlightQuery = '') {
+            tableBody.innerHTML = ''; // Clear table
 
             let counter = 0;
-            const existingCategories = new Set();
+            // Group by category manually since we might be rendering a filtered subset
+            // If filtered, do we still group? Yes, structure should be maintained.
 
-            // Note: If we want to group purely by category, the default date sort might split them if 
-            // leads of same category are added at different times. 
-            // However, the prompt implies a table list. 
-            // The previous implementation was: If category exists, append. Else create.
-            // This groups them effectively if we trust the loop order.
-            // If we blindly loop through date-sorted docs, we might get:
-            // Cat A - Item 1
-            // Cat B - Item 2
-            // Cat A - Item 3 (New Header? Or append to first Cat A?)
-            // The previous logic `insertRow` handled finding the correct spot.
-            // So we can reuse `insertRow` logic but we need to pass the doc ID for edit/delete.
+            // We need to re-sort or grouping logic depends on order?
+            // The leads come in date order. We can group as we iterate if we want to preserve category headers.
+            // But if we filter, we might break the original "grouping" if we just iterate.
+            // The original logic relied on `insertRow` finding the category header or creating it.
+            // Let's reuse `insertRow` logic but we need to clear headers first.
+            // `tableBody.innerHTML = ''` clears everything.
 
-            snapshot.forEach((docSnap) => {
+            leadsToRender.forEach(lead => {
                 counter++;
-                const data = docSnap.data();
-                const id = docSnap.id;
 
                 // Format date
                 let dateStr = 'Just now';
-                if (data.createdAt) {
-                    dateStr = new Date(data.createdAt.seconds * 1000).toLocaleString();
+                if (lead.createdAt) {
+                    dateStr = new Date(lead.createdAt.seconds * 1000).toLocaleString();
                 }
 
-                // Prepare display values
+                // Prepare website info
                 let websiteInfo = 'N/A';
-                if (data.existingWebsite === 'yes') {
-                    websiteInfo = `${data.websiteUrl} <br><small style="color: #64748b;">${data.websiteImprovement}</small>`;
+                if (lead.existingWebsite === 'yes') {
+                    websiteInfo = `${lead.websiteUrl} <br><small style="color: #64748b;">${lead.websiteImprovement}</small>`;
                 }
 
-                // We pass raw data slightly differently now, or just use data object
-                // Let's create row element
-                const row = createRowElement(id, counter, dateStr, data, websiteInfo);
-                insertRow(row, data.websiteType);
+                const row = createRowElement(lead.id, counter, dateStr, lead, websiteInfo);
+
+                // Header Highlighting Check
+                if (highlightQuery) {
+                    const business = (lead.businessName || '').toLowerCase();
+                    const contact = (lead.contactNumber || '').toLowerCase();
+                    const email = (lead.emailAddress || '').toLowerCase();
+                    if (business.includes(highlightQuery) || contact.includes(highlightQuery) || email.includes(highlightQuery)) {
+                        row.classList.add('highlight-row');
+                    }
+                }
+
+                insertRow(row, lead.websiteType);
             });
-        });
+        }
+
+        // Helper to create table row HTML (Exposed to window if needed, but here we can keep using the existing one if unchanged)
+        // Note: The previous logic attached `createRowElement` to window. I should keep it or ensure my new calls use it.
+        // It's defined below in the file. I will not remove it, just use it.
+
+        /* 
+           Logic to insert row into correct category group.
+           Since I cleared the table, I need to recreate category headers as needed.
+           The `insertRow` function I wrote earlier handles creating headers if missing!
+           So I can just call it.
+        */
 
 
+        // Helper to create table row HTML
         window.createRowElement = function (id, counter, date, data, websiteDisplay) {
             const row = document.createElement('tr');
-            row.dataset.id = id; // Store doc ID on row
+            row.dataset.id = id; // Store doc ID on row for finding it later
             row.dataset.raw = JSON.stringify(data); // Store full data for easy edit populate
 
-            // Status Options
+            // Status Dropdown Options
             const pd = ["New", "Contacted", "Qualified", "Lost"];
             let statusOptions = "";
             pd.forEach(s => {
@@ -351,12 +620,13 @@
             return row;
         }
 
+        // Logic to insert row into correct category group
         window.insertRow = function (row, category) {
             // Find or create category section
             let categoryRow = document.getElementById(`cat-${category.replace(/\s+/g, '-')}`);
 
             if (!categoryRow) {
-                // Create category header row
+                // Create category header row if it doesn't exist
                 categoryRow = document.createElement('tr');
                 categoryRow.id = `cat-${category.replace(/\s+/g, '-')}`;
                 categoryRow.className = 'category-header';
@@ -368,7 +638,7 @@
                 tableBody.appendChild(categoryRow);
             }
 
-            // Insert logic
+            // Find the last row in this category group to append after
             let lastRowInGroup = categoryRow;
             let nextSibling = categoryRow.nextElementSibling;
 
