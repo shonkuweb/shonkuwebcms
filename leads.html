@@ -660,7 +660,8 @@
                 // Prepare website info
                 let websiteInfo = 'N/A';
                 if (lead.existingWebsite === 'yes') {
-                    websiteInfo = `${lead.websiteUrl} <br><small style="color: #64748b;">${lead.websiteImprovement}</small>`;
+                    // Make URL clickable for copy
+                    websiteInfo = `<span class="copy-target" onclick="copyToClipboard('${lead.websiteUrl}')" title="Click to copy">${lead.websiteUrl}</span> <br><small style="color: #64748b;">${lead.websiteImprovement}</small>`;
                 }
 
                 const row = createRowElement(lead.id, counter, dateStr, lead, websiteInfo);
@@ -698,12 +699,12 @@
             row.innerHTML = `
                 <td>${counter}</td>
                 <td>${date}</td>
-                <td><strong>${data.businessName}</strong></td>
+                <td><strong class="copy-target" onclick="copyToClipboard('${data.businessName.replace(/'/g, "\\'")}')" title="Click to copy">${data.businessName}</strong></td>
                 <td>${data.websiteType}</td>
-                <td>${data.contactNumber}</td>
-                <td>${data.emailAddress || 'N/A'}</td>
+                <td><span class="copy-target" onclick="copyToClipboard('${data.contactNumber}')" title="Click to copy">${data.contactNumber}</span></td>
+                <td>${data.emailAddress !== 'N/A' ? `<span class="copy-target" onclick="copyToClipboard('${data.emailAddress}')" title="Click to copy">${data.emailAddress}</span>` : 'N/A'}</td>
                 <td>${websiteDisplay}</td>
-                <td>${data.socialMedia || 'N/A'}</td>
+                <td>${data.socialMedia !== 'N/A' ? `<span class="copy-target" onclick="copyToClipboard('${data.socialMedia}')" title="Click to copy">${data.socialMedia}</span>` : 'N/A'}</td>
                 <td>
                     <button type="button" class="btn-sm btn-view-remarks" onclick="openRemarksModal('${id}')">View</button>
                     <!-- Hidden input to store value if needed for quick access without DB lookup, relying on dataset -->
@@ -798,6 +799,18 @@
                 closeDeleteModal();
             }
         });
+
+        // Copy to Clipboard Function
+        window.copyToClipboard = function (text) {
+            if (!text || text === 'N/A') return;
+
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Copied to clipboard!', 'success');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                showNotification('Failed to copy', 'error');
+            });
+        }
 
         window.editLead = function (id) {
             // Find row by dataset id is safest? Or just pass data?

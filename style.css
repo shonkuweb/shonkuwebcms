@@ -1541,3 +1541,19 @@ body {
     background-color: #16a34a;
     transform: translateY(-1px);
 }
+
+/* Copy to Clipboard Styling */
+.copy-target {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.copy-target:hover {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+
+.copy-target:active {
+    transform: scale(0.98);
+}
