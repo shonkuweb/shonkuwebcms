@@ -50,9 +50,29 @@
             <!-- View All Clients -->
             <a href="client-list.html" class="btn-primary action-btn secondary-btn">View Client Profiles</a>
         </div>
+        <!-- Sign Out Button -->
+        <button id="signOutBtn" class="btn-primary action-btn secondary-btn"
+            style="margin-top: 20px; background-color: #fee2e2; color: #b91c1c; border-color: #fecaca;">Sign
+            Out</button>
+    </div>
     </div>
     <!-- Security Script -->
     <script src="security.js"></script>
+    <script type="module">
+        import { auth, onAuthStateChanged, signOut } from './firebase-config.js';
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        document.getElementById('signOutBtn').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
 </body>
 
 </html>

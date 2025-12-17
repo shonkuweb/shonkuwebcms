@@ -258,6 +258,9 @@
         <!-- Leads Display Table -->
         <div class="leads-table-container">
             <h2>Generated Leads</h2>
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 10px; padding-right: 8px;">
+                <span id="totalLeadCount" style="font-size: 14px; color: #64748b; font-weight: 600;">Total: 0</span>
+            </div>
             <table class="leads-table">
                 <thead>
                     <tr>
@@ -307,7 +310,14 @@
     <script src="drag-scroll.js"></script>
     <script type="module">
         // Import Firebase Functions
-        import { db, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from './firebase-config.js';
+        import { db, collection, addDoc, onSnapshot, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp, auth, onAuthStateChanged, signOut } from './firebase-config.js';
+
+        // Auth Check
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = 'index.html';
+            }
+        });
 
         // Toggle Website Fields Visibility (Existing)
         const websiteFields = document.getElementById('websiteFields');
@@ -636,6 +646,12 @@
         // Render Table Function
         function renderTable(leadsToRender, highlightQuery = '') {
             tableBody.innerHTML = ''; // Clear table
+
+            // Update Total Count
+            const totalCountElement = document.getElementById('totalLeadCount');
+            if (totalCountElement) {
+                totalCountElement.textContent = `Total: ${leadsToRender.length}`;
+            }
 
             let counter = 0;
             // Group by category manually since we might be rendering a filtered subset

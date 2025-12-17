@@ -151,6 +151,19 @@ body {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
 }
 
+.google-sign-in-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+}
+
+.google-sign-in-btn:hover {
+    background-color: #f8fafc;
+}
+
 .sign-in-btn:hover {
     background-color: #333333;
 }
