@@ -4,10 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginButton = document.querySelector('.google-sign-in-btn');
 
     // Check if user is already logged in
-    onAuthStateChanged(auth, (user) => {
+    // Check if user is already logged in
+    onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // User is signed in, redirect to dashboard
-            window.location.href = 'dashboard.html';
+            if (user.email === 'shonkuweb@gmail.com') {
+                // User is signed in and authorized
+                window.location.href = 'dashboard.html';
+            } else {
+                // User signed in but unauthorized
+                alert('Unauthorized email. Access denied.');
+                await auth.signOut();
+            }
         }
     });
 
