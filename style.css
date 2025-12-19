@@ -1570,3 +1570,19 @@ body {
 .copy-target:active {
     transform: scale(0.98);
 }
+
+/* Additional Status Badge Styles */
+.status-badge.pending {
+    background-color: #fff7ed;
+    color: #c2410c;
+}
+
+.status-badge.completed {
+    background-color: #f0f9ff;
+    color: #0369a1;
+}
+
+.status-badge.inactive {
+    background-color: #f1f5f9;
+    color: #64748b;
+}
