@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Configure E-commerce Website</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* specific overrides for this form */
+        .main-container {
+            max-width: 900px;
+        }
+
+        .section-header {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            color: #0f172a;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .subsection-header {
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .checkbox-group,
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .checkbox-item,
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input[type="checkbox"],
+        .radio-item input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-item label,
+        .radio-item label {
+            font-size: 14px;
+            color: #334155;
+            cursor: pointer;
+            margin-bottom: 0;
+            /* Override global label margin */
+            font-weight: 400;
+        }
+
+        .hidden-section {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            margin-top: 8px;
+        }
+
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        input[type="color"] {
+            width: 50px;
+            height: 40px;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            background: none;
+        }
+
+        .form-row.three-col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        @media (max-width: 768px) {
+            .form-row.three-col {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/logo-black.jpg" alt="Logo" class="top-left-logo">
+
+    <div class="main-container">
+        <div class="form-header">
+            <div>
+                <h1>E-commerce Website Setup</h1>
+                <p style="color: #64748b; margin-top: 5px;">Complete the details below to configure your project</p>
+            </div>
+            <a href="create-client.html" class="back-link">← Back</a>
+        </div>
+
+        <form class="client-form" id="ecommerceForm">
+
+            <!-- Section 1: Business Identity -->
+            <h2 class="section-header">1. Business Identity</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="businessName">Legal Business Name <span style="color:red">*</span></label>
+                    <input type="text" id="businessName" placeholder="e.g. Acme Retail Pvt Ltd" required>
+                </div>
+                <div class="form-group">
+                    <label for="businessType">Business Type <span style="color:red">*</span></label>
+                    <select id="businessType" required>
+                        <option value="" disabled selected>Select Type</option>
+                        <option value="Sole Proprietorship">Sole Proprietorship</option>
+                        <option value="Partnership Firm">Partnership Firm</option>
+                        <option value="LLP">Limited Liability Partnership (LLP)</option>
+                        <option value="Private Limited">Private Limited Company</option>
+                        <option value="OPC">One Person Company (OPC)</option>
+                        <option value="Public Limited">Public Limited Company</option>
+                        <option value="Section 8">Section 8 Company (Non-Profit)</option>
+                        <option value="HUF">Hindu Undivided Family (HUF)</option>
+                        <option value="Co-operative">Co-operative Society</option>
+                        <option value="Producer">Producer Company</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="businessAddress">Registered Business Address <span style="color:red">*</span></label>
+                <textarea id="businessAddress" placeholder="Full registered address including PIN code" rows="3"
+                    required></textarea>
+            </div>
+
+
+            <!-- Section 2: Primary Contact Details -->
+            <h2 class="section-header">2. Primary Contact Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Contact Person Name</label>
+                    <input type="text" placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <label>Role in Business</label>
+                    <input type="text" placeholder="e.g. Owner, Manager">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" placeholder="+91 XXXXX XXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="name@company.com">
+                </div>
+            </div>
+
+
+            <!-- Section 3: Tax & Registration Details -->
+            <h2 class="section-header">3. Tax & Registration Details</h2>
+            <div class="form-group">
+                <label>GST Registered?</label>
+                <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                    <div class="radio-item">
+                        <input type="radio" name="gstRegistered" id="gstYes" value="yes" onchange="toggleGST(true)">
+                        <label for="gstYes">Yes</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" name="gstRegistered" id="gstNo" value="no" checked
+                            onchange="toggleGST(false)">
+                        <label for="gstNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="gstDetails" class="hidden-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>GSTIN Number</label>
+                        <input type="text" placeholder="22AAAAA0000A1Z5" style="text-transform: uppercase;">
+                    </div>
+                    <div class="form-group">
+                        <label>Business / Proprietor PAN</label>
+                        <input type="text" placeholder="ABCDE1234F" style="text-transform: uppercase;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Expected Annual Turnover</label>
+                    <select>
+                        <option value="" disabled selected>Select Range</option>
+                        <option value="0-5L">0 - 5 Lakhs</option>
+                        <option value="5-20L">5 - 20 Lakhs</option>
+                        <option value="20L-1Cr">20 Lakhs - 1 Crore</option>
+                        <option value="1Cr+">1 Crore+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Registration Documents (MSME/Udyam/Other)</label>
+                    <input type="file" multiple class="form-control" style="padding: 10px;">
+                </div>
+            </div>
+
+
+            <!-- Section 4: Product & Catalog Details -->
+            <h2 class="section-header">4. Product & Catalog Details</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>No. of Product Categories</label>
+                    <input type="number" placeholder="e.g. 5" min="1">
+                </div>
+                <div class="form-group">
+                    <label>Approx. Number of Items / SKUs</label>
+                    <input type="number" placeholder="e.g. 100" min="1">
+                </div>
+            </div>
+
+
+            <!-- Section 5: Payment Gateway Integration -->
+            <h2 class="section-header">5. Payment Gateway Integration</h2>
+            <div class="form-group">
+                <label>Do you want Payment Gateway Integration?</label>
+                <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                    <div class="radio-item">
+                        <input type="radio" name="pgIntegration" id="pgYes" value="yes" onchange="togglePG(true)">
+                        <label for="pgYes">Yes</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" name="pgIntegration" id="pgNo" value="no" checked
+                            onchange="togglePG(false)">
+                        <label for="pgNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pgDocuments" class="hidden-section">
+                <h3 class="subsection-header">🧾 Business Documents</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Certificate of Incorporation / Reg.</label>
+                        <input type="file" style="padding: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label>PAN Card (Business/Proprietor)</label>
+                        <input type="file" style="padding: 10px;">
+                    </div>
+                </div>
+
+                <h3 class="subsection-header">🧑‍💼 Owner / Director Documents</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Owner/Director PAN</label>
+                        <input type="file" style="padding: 10px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Aadhaar / Passport / Voter ID</label>
+                        <input type="file" style="padding: 10px;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Passport-size Photograph</label>
+                    <input type="file" style="padding: 10px;">
+                </div>
+
+                <h3 class="subsection-header">🏦 Bank Account Documents</h3>
+                <div class="form-group">
+                    <label>Cancelled Cheque OR Bank Statement</label>
+                    <input type="file" style="padding: 10px;">
+                </div>
+            </div>
+
+
+            <!-- Section 6: Payment Methods -->
+            <h2 class="section-header">6. Payment Methods on Site</h2>
+            <div class="form-group">
+                <label>Select Accepted Payment Methods</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="payCod" onchange="toggleCOD(this.checked)">
+                        <label for="payCod">Cash on Delivery (COD)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="payCards">
+                        <label for="payCards">Cards (Debit / Credit)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="payNetBanking">
+                        <label for="payNetBanking">Net Banking / UPI</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="codRules" class="hidden-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>COD Charges (₹)</label>
+                        <input type="number" placeholder="e.g. 50">
+                    </div>
+                    <div class="form-group">
+                        <label>Allowed PIN Codes for COD</label>
+                        <textarea placeholder="Enter PIN codes separated by commas" rows="1"></textarea>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Section 7: Delivery & Logistics -->
+            <h2 class="section-header">7. Delivery & Logistics</h2>
+            <div class="form-group">
+                <label>Delivery Methods</label>
+                <div class="checkbox-group" style="flex-direction: row; flex-wrap: wrap; gap: 20px;">
+                    <div class="checkbox-item"><input type="checkbox" id="delOwn"><label for="delOwn">Own
+                            Courier</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="delThirdParty"><label
+                            for="delThirdParty">Third-party Courier</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="delPost"><label for="delPost">India
+                            Post</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="delPickup"><label for="delPickup">Self
+                            Pickup</label></div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Delivery Charges (₹)</label>
+                    <input type="number" placeholder="Standard shipping cost">
+                </div>
+                <div class="form-group">
+                    <label>Serviceable PIN Codes</label>
+                    <textarea placeholder="Leave empty if pan-India" rows="1"></textarea>
+                </div>
+            </div>
+
+
+            <!-- Section 8: Branding & Content -->
+            <h2 class="section-header">8. Branding & Content</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Do you have a Logo?</label>
+                    <select>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Brand Tone</label>
+                    <select>
+                        <option value="Professional">Professional</option>
+                        <option value="Friendly">Friendly</option>
+                        <option value="Premium">Premium / Luxury</option>
+                        <option value="Minimal">Minimalist</option>
+                        <option value="Fun">Fun / Playful</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Preferred Brand Colors</label>
+                    <div class="color-picker-wrapper">
+                        <input type="color" value="#000000">
+                        <input type="text" placeholder="Or enter hex code, e.g. #FF5733" style="flex:1;">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Reference Websites (Inspiration)</label>
+                    <textarea placeholder="Paste URLs of websites you like..." rows="2"></textarea>
+                </div>
+            </div>
+
+
+            <!-- Section 9: Website Features -->
+            <h2 class="section-header">9. Website Features</h2>
+            <div class="form-group">
+                <label>Must-Have Features</label>
+                <div class="checkbox-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="checkbox-item"><input type="checkbox" checked><label>Product Search</label></div>
+                    <div class="checkbox-item"><input type="checkbox"><label>Product Filters</label></div>
+                    <div class="checkbox-item"><input type="checkbox"><label>Related Products</label></div>
+                    <div class="checkbox-item"><input type="checkbox"><label>Coupon Codes</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="featReviews"
+                            onchange="toggleReviews(this.checked)"><label>Customer Reviews</label></div>
+                </div>
+            </div>
+            <div id="reviewSamples" class="hidden-section">
+                <div class="form-group">
+                    <label>Sample Reviews (if available)</label>
+                    <textarea placeholder="Paste 2-3 testimonials or reviews..." rows="3"></textarea>
+                </div>
+            </div>
+
+
+            <!-- Section 10: Admin & Operations -->
+            <h2 class="section-header">10. Admin & Operations</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Order Notifications (Email)</label>
+                    <input type="email" placeholder="admin@domain.com">
+                </div>
+                <div class="form-group">
+                    <label>Order Notifications (WhatsApp Number)</label>
+                    <input type="tel" placeholder="+91...">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Admin Panel Training Required?</label>
+                <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                    <div class="radio-item"><input type="radio" name="training" id="trainYes"><label
+                            for="trainYes">Yes</label></div>
+                    <div class="radio-item"><input type="radio" name="training" id="trainNo" checked><label
+                            for="trainNo">No</label></div>
+                </div>
+            </div>
+
+
+            <!-- Section 11: Domain & Hosting -->
+            <h2 class="section-header">11. Domain & Hosting</h2>
+            <div class="form-row">
+                <!-- Domain -->
+                <div class="form-group">
+                    <label>Domain Purchased?</label>
+                    <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                        <div class="radio-item"><input type="radio" name="domainStatus" id="domYes" value="yes"
+                                onchange="toggleDomain(true)"><label for="domYes">Yes</label></div>
+                        <div class="radio-item"><input type="radio" name="domainStatus" id="domNo" value="no" checked
+                                onchange="toggleDomain(false)"><label for="domNo">No</label></div>
+                    </div>
+                </div>
+                <!-- Hosting -->
+                <div class="form-group">
+                    <label>Hosting Purchased?</label>
+                    <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                        <div class="radio-item"><input type="radio" name="hostingStatus" id="hostYes" value="yes"
+                                onchange="toggleHosting(true)"><label for="hostYes">Yes</label></div>
+                        <div class="radio-item"><input type="radio" name="hostingStatus" id="hostNo" value="no" checked
+                                onchange="toggleHosting(false)"><label for="hostNo">No</label></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="domainDetails" class="hidden-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Domain Name</label>
+                        <input type="text" placeholder="example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Domain Provider Credentials</label>
+                        <input type="text" placeholder="Username / Password (optional)">
+                    </div>
+                </div>
+            </div>
+
+            <div id="hostingDetails" class="hidden-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Hosting Provider</label>
+                        <input type="text" placeholder="e.g. GoDaddy, Hostinger">
+                    </div>
+                    <div class="form-group">
+                        <label>Hosting Access Credentials</label>
+                        <input type="text" placeholder="Username / Password or CPanel Link">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Section 12: Commercials -->
+            <h2 class="section-header">12. Commercials</h2>
+            <div class="form-group">
+                <label>Total Project Budget (₹)</label>
+                <input type="number" placeholder="0.00">
+            </div>
+            <div class="form-group">
+                <label>Payment Mode</label>
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" name="payMode" id="payFull" value="full" checked
+                            onchange="toggleAdvance(false)">
+                        <label for="payFull">Full Payment</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" name="payMode" id="payAdv" value="advance" onchange="toggleAdvance(true)">
+                        <label for="payAdv">Advance Payment</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="advanceDetails" class="hidden-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Advance Amount (₹)</label>
+                        <input type="number" id="advanceAmount" placeholder="0.00" oninput="calcRemaining()">
+                    </div>
+                    <div class="form-group">
+                        <label>Remaining Payment</label>
+                        <input type="text" id="remainingAmount" placeholder="Will be calculated..." readonly
+                            style="background-color: #f1f5f9;">
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn-secondary"
+                    onclick="window.location.href='create-client.html'">Cancel</button>
+                <button type="button" class="btn-primary"
+                    onclick="alert('Form submitted successfully!'); window.location.href='client-list.html'">Create
+                    Project</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="security.js"></script>
+    <script>
+        // Conditional Logic Functions
+
+        function toggleGST(show) {
+            const el = document.getElementById('gstDetails');
+            el.style.display = show ? 'block' : 'none';
+        }
+
+        function togglePG(show) {
+            const el = document.getElementById('pgDocuments');
+            el.style.display = show ? 'block' : 'none';
+        }
+
+        function toggleCOD(checked) {
+            const el = document.getElementById('codRules');
+            el.style.display = checked ? 'block' : 'none';
+        }
+
+        function toggleReviews(checked) {
+            const el = document.getElementById('reviewSamples');
+            el.style.display = checked ? 'block' : 'none';
+        }
+
+        function toggleDomain(show) {
+            const el = document.getElementById('domainDetails');
+            el.style.display = show ? 'block' : 'none';
+        }
+
+        function toggleHosting(show) {
+            const el = document.getElementById('hostingDetails');
+            el.style.display = show ? 'block' : 'none';
+        }
+
+        function toggleAdvance(show) {
+            const el = document.getElementById('advanceDetails');
+            el.style.display = show ? 'block' : 'none';
+        }
+
+        function calcRemaining() {
+            // Placeholder logic since Total Budget isn't captured in a variable yet
+            // In a real scenario, we'd grab the Total Budget value and subtract Advance
+            const adv = document.getElementById('advanceAmount').value;
+            const remainingField = document.getElementById('remainingAmount');
+            if (adv) {
+                remainingField.value = `Total - ${adv}`;
+            } else {
+                remainingField.value = '';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -51,9 +51,25 @@
     <script src="security.js"></script>
     <script src="drag-scroll.js"></script>
     <script type="module">
-        import { auth, onAuthStateChanged, signOut, db, collection, query, orderBy, onSnapshot } from './firebase-config.js';
+        import { auth, onAuthStateChanged, signOut, db, collection, query, orderBy, onSnapshot, deleteDoc, doc } from './firebase-config.js';
 
         const tableBody = document.querySelector('.client-table tbody');
+
+        // Make deleteClient globally accessible
+        window.deleteClient = async (clientId) => {
+            if (confirm('Are you sure you want to delete this client? This action cannot be undone.')) {
+                try {
+                    await deleteDoc(doc(db, "clients", clientId));
+                    // Check if page needs reload or if snapshot listener handles UI update
+                    // usually snapshot listener handles it, but let's see. 
+                    // Actually, snapshot listener will handle the UI update automatically.
+                    alert('Client deleted successfully.');
+                } catch (error) {
+                    console.error("Error deleting client: ", error);
+                    alert('Error deleting client: ' + error.message);
+                }
+            }
+        };
 
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
@@ -72,8 +88,8 @@
                     if (querySnapshot.empty) {
                         tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No clients found</td></tr>';
                     } else {
-                        querySnapshot.forEach((doc) => {
-                            const client = doc.data();
+                        querySnapshot.forEach((docSnap) => {
+                            const client = docSnap.data();
                             const row = `
                                 <tr>
                                     <td>${client.clientId || 'N/A'}</td>
@@ -83,7 +99,7 @@
                                     <td>${client.contact || 'N/A'}</td>
                                     <td>
                                         <button class="action-btn edit-btn" onclick="alert('Edit implementation pending')">Edit</button>
-                                        <button class="action-btn delete-btn" onclick="alert('Delete implementation pending')">Delete</button>
+                                        <button class="action-btn delete-btn" onclick="deleteClient('${docSnap.id}')">Delete</button>
                                     </td>
                                 </tr>
                             `;

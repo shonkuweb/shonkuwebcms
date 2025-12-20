@@ -3,192 +3,108 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Create Client</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .hidden-section {
-            display: none;
+        /* Scoped styles for this specific simplified page */
+        .create-client-container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            text-align: center;
         }
 
-        /* Custom styles for checkbox groups to look neat */
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
-            margin-top: 8px;
+        .dropdown-group {
+            margin-bottom: 2rem;
+            text-align: left;
         }
 
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #1e293b;
-            cursor: pointer;
+        .dropdown-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary, #111827);
         }
 
-        .checkbox-item input[type="checkbox"],
-        .checkbox-item input[type="radio"] {
-            width: 16px;
-            height: 16px;
-            margin: 0;
-            cursor: pointer;
-            accent-color: #0f172a;
-        }
-
-        /* Sub-sections within form cards */
-        .sub-section-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #334155;
-            margin-bottom: 16px;
-            margin-top: 24px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-left: 3px solid #0f172a;
-            padding-left: 10px;
-        }
-
-        .conditional-field {
-            display: none;
-            margin-top: 12px;
-            padding: 16px;
-            background-color: #f8fafc;
+        .styled-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            background-color: white;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .styled-select:focus {
+            outline: none;
+            border-color: var(--primary-color, #2563eb);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .next-btn {
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
+    <img src="images/logo-black.jpg" alt="Logo" class="top-left-logo">
+
     <div class="main-container">
-
-        <!-- INITIAL STEP: SELECT TYPE -->
-        <div id="initial-step">
-            <div class="form-header">
-                <h1>Create New Client</h1>
-                <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
-            </div>
-
-            <form class="client-form" id="typeSelectionForm">
-                <div class="form-section">
-                    <h2>Client Details</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="clientName">Client Name</label>
-                            <input type="text" id="clientName" name="clientName" placeholder="Enter full name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="companyName">Company Name</label>
-                            <input type="text" id="companyName" name="companyName" placeholder="Enter company name"
-                                required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="clientStatus">Status</label>
-                            <select id="clientStatus" name="clientStatus" required>
-                                <option value="Active">Active</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Completed">Completed</option>
-                                <option value="Inactive">Inactive</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="clientContact">Contact Info</label>
-                            <input type="text" id="clientContact" name="clientContact" placeholder="Email or Phone"
-                                required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h2>Project Details</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="websiteType">Website Type</label>
-                            <select id="websiteType" name="websiteType" required>
-                                <option value="" disabled selected>Select Website Type</option>
-                                <option value="E-commerce Website">E-commerce Website</option>
-                                <option value="Business Website">Business Website</option>
-                                <option value="Portfolio Website">Portfolio Website</option>
-                                <option value="Blog Website">Blog Website</option>
-                                <option value="News Website">News Website</option>
-                                <option value="Educational Website">Educational Website</option>
-                                <option value="Social Networking Website">Social Networking Website</option>
-                                <option value="Forum / Community Website">Forum / Community Website</option>
-                                <option value="Non-Profit Website">Non-Profit Website</option>
-                                <option value="Government Website">Government Website</option>
-                                <option value="Entertainment Website">Entertainment Website</option>
-                                <option value="Personal Website">Personal Website</option>
-                                <option value="Web Application">Web Application</option>
-                                <option value="Landing Page">Landing Page</option>
-                                <option value="Directory / Listing Website">Directory / Listing Website</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary"
-                        onclick="window.location.href='client-list.html'">Cancel</button>
-                    <button type="submit" class="btn-primary">Create Client</button>
-                </div>
-            </form>
+        <div class="form-header">
+            <h1>Create New Client</h1>
+            <a href="client-list.html" class="back-link">← Back to Client List</a>
         </div>
 
-        <!-- E-COMMERCE STEP: DETAILED FORM (Hidden/Bypassed for now) -->
-        <div id="ecommerce-form-step" class="hidden-section">
-            <!-- Content preserved but hidden -->
+        <div class="create-client-container">
+            <div class="dropdown-group">
+                <label for="websiteType">Select Website Type</label>
+                <select id="websiteType" class="styled-select">
+                    <option value="" disabled selected>Choose a type...</option>
+                    <option value="typ1.html">E-commerce Website</option>
+                    <option value="typ2.html">Business Website</option>
+                    <option value="typ3.html">Portfolio Website</option>
+                    <option value="typ4.html">Blog Website</option>
+                    <option value="typ5.html">News Website</option>
+                    <option value="typ6.html">Educational Website</option>
+                    <option value="typ7.html">Social Networking Website</option>
+                    <option value="typ8.html">Forum / Community Website</option>
+                    <option value="typ9.html">Non-Profit Website</option>
+                    <option value="typ10.html">Government Website</option>
+                    <option value="typ11.html">Entertainment Website</option>
+                    <option value="typ12.html">Personal Website</option>
+                    <option value="typ13.html">Web Application</option>
+                    <option value="typ14.html">Landing Page</option>
+                    <option value="typ15.html">Directory / Listing Website</option>
+                </select>
+            </div>
+
+            <button id="nextBtn" class="btn-primary next-btn">Next</button>
         </div>
     </div>
 
-    <script type="module">
-        import { db, collection, addDoc, serverTimestamp, auth, onAuthStateChanged, signOut } from './firebase-config.js';
+    <script src="security.js"></script>
+    <script>
+        const nextBtn = document.getElementById('nextBtn');
+        const websiteTypeSelect = document.getElementById('websiteType');
 
-        // Auth Check
-        onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                window.location.href = 'index.html';
-            } else if (user.email !== 'shonkuweb@gmail.com') {
-                alert('Unauthorized email. Access denied.');
-                await signOut(auth);
-                window.location.href = 'index.html';
-            }
-        });
-
-        const typeSelectionForm = document.getElementById('typeSelectionForm');
-
-        typeSelectionForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const clientName = document.getElementById('clientName').value;
-            const companyName = document.getElementById('companyName').value;
-            const clientStatus = document.getElementById('clientStatus').value;
-            const clientContact = document.getElementById('clientContact').value;
-            const websiteType = document.getElementById('websiteType').value;
-
-            // Generate a simple Client ID
-            const clientId = 'CL-' + Math.floor(1000 + Math.random() * 9000);
-
-            try {
-                await addDoc(collection(db, "clients"), {
-                    clientId: clientId,
-                    name: clientName,
-                    company: companyName,
-                    status: clientStatus,
-                    contact: clientContact,
-                    websiteType: websiteType,
-                    createdAt: serverTimestamp()
-                });
-
-                alert('Client created successfully!');
-                window.location.href = 'client-list.html';
-            } catch (error) {
-                console.error("Error adding document: ", error);
-                alert('Error creating client. See console for details.');
+        nextBtn.addEventListener('click', () => {
+            const selectedValue = websiteTypeSelect.value;
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            } else {
+                alert('Please select a website type first.');
             }
         });
     </script>
