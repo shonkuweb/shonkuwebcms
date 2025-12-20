@@ -488,7 +488,7 @@
             snapshot.forEach((docSnap) => {
                 allLeads.push({ id: docSnap.id, ...docSnap.data() });
             });
-            renderTable(allLeads);
+            applySearchAndFilters();
         });
 
         // Search & Filter Logic
