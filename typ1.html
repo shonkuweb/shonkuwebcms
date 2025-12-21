@@ -374,6 +374,29 @@
                                 placeholder="Enter areas and pricing details..."></textarea>
                         </div>
                     </div>
+
+                    <!-- 8. Delivery Options -->
+                    <div class="checkbox-item" style="display: block;">
+                        <label style="margin-bottom: 5px; display: block; font-weight: 600;">8. Delivery Options</label>
+                        <div style="display: flex; flex-direction: column; gap: 10px; margin-left: 20px;">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="deliveryInhouse"
+                                    onchange="toggleInhouseDetails(this.checked)">
+                                <label for="deliveryInhouse">Inhouse</label>
+                            </div>
+                            <div id="inhouseDetails" class="hidden-section"
+                                style="margin-left: 30px; margin-bottom: 5px;">
+                                <label style="display: block; margin-bottom: 5px; font-size: 0.9em;">Information related
+                                    to this method</label>
+                                <textarea class="form-control" rows="2"
+                                    placeholder="Enter inhouse delivery details..."></textarea>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="deliveryThirdParty">
+                                <label for="deliveryThirdParty">Third party delivery integration</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -407,6 +430,11 @@
 
         function toggleFleet(show) {
             const el = document.getElementById('fleetDetails');
+            el.style.display = show ? 'block' : 'none';
+        }
+
+        function toggleInhouseDetails(show) {
+            const el = document.getElementById('inhouseDetails');
             el.style.display = show ? 'block' : 'none';
         }
 
