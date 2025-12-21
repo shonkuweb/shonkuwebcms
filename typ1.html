@@ -176,353 +176,214 @@
             </div>
 
 
-            <!-- Section 3: Tax & Registration Details -->
-            <h2 class="section-header">3. Tax & Registration Details</h2>
+
+
+            <!-- Section 3: Details Needed -->
+            <h2 class="section-header">3. Details Needed</h2>
             <div class="form-group">
-                <label>GST Registered?</label>
-                <div class="radio-group" style="flex-direction: row; gap: 20px;">
-                    <div class="radio-item">
-                        <input type="radio" name="gstRegistered" id="gstYes" value="yes" onchange="toggleGST(true)">
-                        <label for="gstYes">Yes</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" name="gstRegistered" id="gstNo" value="no" checked
-                            onchange="toggleGST(false)">
-                        <label for="gstNo">No</label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="gstDetails" class="hidden-section">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>GSTIN Number</label>
-                        <input type="text" placeholder="22AAAAA0000A1Z5" style="text-transform: uppercase;">
-                    </div>
-                    <div class="form-group">
-                        <label>Business / Proprietor PAN</label>
-                        <input type="text" placeholder="ABCDE1234F" style="text-transform: uppercase;">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Expected Annual Turnover</label>
-                    <select>
-                        <option value="" disabled selected>Select Range</option>
-                        <option value="0-5L">0 - 5 Lakhs</option>
-                        <option value="5-20L">5 - 20 Lakhs</option>
-                        <option value="20L-1Cr">20 Lakhs - 1 Crore</option>
-                        <option value="1Cr+">1 Crore+</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Registration Documents (MSME/Udyam/Other)</label>
-                    <input type="file" multiple class="form-control" style="padding: 10px;">
-                </div>
-            </div>
-
-
-            <!-- Section 4: Product & Catalog Details -->
-            <h2 class="section-header">4. Product & Catalog Details</h2>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>No. of Product Categories</label>
-                    <input type="number" placeholder="e.g. 5" min="1">
-                </div>
-                <div class="form-group">
-                    <label>Approx. Number of Items / SKUs</label>
-                    <input type="number" placeholder="e.g. 100" min="1">
-                </div>
-            </div>
-
-
-            <!-- Section 5: Payment Gateway Integration -->
-            <h2 class="section-header">5. Payment Gateway Integration</h2>
-            <div class="form-group">
-                <label>Do you want Payment Gateway Integration?</label>
-                <div class="radio-group" style="flex-direction: row; gap: 20px;">
-                    <div class="radio-item">
-                        <input type="radio" name="pgIntegration" id="pgYes" value="yes" onchange="togglePG(true)">
-                        <label for="pgYes">Yes</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" name="pgIntegration" id="pgNo" value="no" checked
-                            onchange="togglePG(false)">
-                        <label for="pgNo">No</label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="pgDocuments" class="hidden-section">
-                <h3 class="subsection-header">🧾 Business Documents</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Certificate of Incorporation / Reg.</label>
-                        <input type="file" style="padding: 10px;">
-                    </div>
-                    <div class="form-group">
-                        <label>PAN Card (Business/Proprietor)</label>
-                        <input type="file" style="padding: 10px;">
-                    </div>
-                </div>
-
-                <h3 class="subsection-header">🧑‍💼 Owner / Director Documents</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Owner/Director PAN</label>
-                        <input type="file" style="padding: 10px;">
-                    </div>
-                    <div class="form-group">
-                        <label>Aadhaar / Passport / Voter ID</label>
-                        <input type="file" style="padding: 10px;">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Passport-size Photograph</label>
-                    <input type="file" style="padding: 10px;">
-                </div>
-
-                <h3 class="subsection-header">🏦 Bank Account Documents</h3>
-                <div class="form-group">
-                    <label>Cancelled Cheque OR Bank Statement</label>
-                    <input type="file" style="padding: 10px;">
-                </div>
-            </div>
-
-
-            <!-- Section 6: Payment Methods -->
-            <h2 class="section-header">6. Payment Methods on Site</h2>
-            <div class="form-group">
-                <label>Select Accepted Payment Methods</label>
                 <div class="checkbox-group">
+                    <!-- 1. GST Question -->
+                    <div class="checkbox-item" style="display: block;">
+                        <label style="margin-bottom: 5px; display: block; font-weight: 600;">1. Do they have
+                            GST?</label>
+                        <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                            <div class="radio-item">
+                                <input type="radio" name="hasGST" id="gstYes" value="yes"
+                                    onchange="toggleGSTCheck(true)">
+                                <label for="gstYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="hasGST" id="gstNo" value="no" checked
+                                    onchange="toggleGSTCheck(false)">
+                                <label for="gstNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="gstDetailsInput" class="hidden-section" style="margin-bottom: 15px;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>GSTIN Number</label>
+                                <input type="text" placeholder="22AAAAA0000A1Z5" style="text-transform: uppercase;">
+                            </div>
+                            <div class="form-group">
+                                <label>Business / Proprietor PAN</label>
+                                <input type="text" placeholder="ABCDE1234F" style="text-transform: uppercase;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Logo -->
+                    <div class="checkbox-item" style="display: block;">
+                        <label style="margin-bottom: 5px; display: block; font-weight: 600;">2. Do they have
+                            logo?</label>
+                        <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                            <div class="radio-item">
+                                <input type="radio" name="hasLogo" id="logoYes" value="yes"
+                                    onchange="toggleLogoMessage(true)">
+                                <label for="logoYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="hasLogo" id="logoNo" value="no" checked
+                                    onchange="toggleLogoMessage(false)">
+                                <label for="logoNo">No</label>
+                            </div>
+                        </div>
+                        <div id="logoMessage" class="hidden-section"
+                            style="margin-top: 10px; padding: 10px; border: 1px solid #3b82f6; background-color: #eff6ff; color: #1e40af; border-radius: 4px; font-size: 0.9em;">
+                            Please send the logo in HD quality in WhatsApp.
+                        </div>
+                    </div>
+
+                    <!-- 3. Product Data -->
+                    <div class="checkbox-item" style="display: block;">
+                        <label style="margin-bottom: 5px; display: block; font-weight: 600;">3. Provide images,
+                            description, pricing of all the products they want to list?</label>
+                        <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                            <div class="radio-item">
+                                <input type="radio" name="hasProductData" id="prodYes" value="yes">
+                                <label for="prodYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="hasProductData" id="prodNo" value="no" checked>
+                                <label for="prodNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. User Facing Pages -->
                     <div class="checkbox-item">
-                        <input type="checkbox" id="payCod" onchange="toggleCOD(this.checked)">
-                        <label for="payCod">Cash on Delivery (COD)</label>
+                        <label style="font-weight: 600;">4. User facing website pages required</label>
                     </div>
+
+                    <div id="userPagesList"
+                        style="margin-left: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 10px;">
+                        <div class="checkbox-item"><input type="checkbox" id="kp_home"><label for="kp_home">Home</label>
+                        </div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_category"><label
+                                for="kp_category">Category</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_pdp"><label for="kp_pdp">Product
+                                Details Page</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_search"><label for="kp_search">Search
+                                Results Page</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_cart"><label for="kp_cart">Cart
+                                Page</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_checkout"><label
+                                for="kp_checkout">Checkout</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_login"><label for="kp_login">Login /
+                                Signup Page</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_dashboard"><label
+                                for="kp_dashboard">User Dashboard</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_history"><label for="kp_history">Order
+                                History Page</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_wishlist"><label
+                                for="kp_wishlist">Wishlist Page</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_track"><label for="kp_track">Track
+                                Order</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="kp_confirm"><label for="kp_confirm">Order
+                                Confirmation/Thankyou Page</label></div>
+                    </div>
+
+                    <!-- 5. Admin Panel Pages -->
                     <div class="checkbox-item">
-                        <input type="checkbox" id="payCards">
-                        <label for="payCards">Cards (Debit / Credit)</label>
+                        <label style="font-weight: 600;">5. Admin panel web pages required</label>
                     </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="payNetBanking">
-                        <label for="payNetBanking">Net Banking / UPI</label>
+                    <div id="adminPagesList"
+                        style="margin-left: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+                        <div class="checkbox-item"><input type="checkbox" id="ap_login"><label for="ap_login">Admin
+                                Login</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_dash"><label
+                                for="ap_dash">Dashboard/Analytics</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_prod"><label for="ap_prod">Product
+                                Management</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_cat"><label for="ap_cat">Category
+                                Management</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_ord"><label for="ap_ord">Order
+                                Management</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_cust"><label for="ap_cust">Customer
+                                Management</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_inv"><label for="ap_inv">Inventory /
+                                Stock</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_pay"><label for="ap_pay">Payment
+                                Settings</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_ship"><label for="ap_ship">Shipping
+                                Settings</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_offer"><label for="ap_offer">Offers or
+                                Coupons</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ap_cms"><label for="ap_cms">CMS/Banner
+                                Manager</label></div>
                     </div>
-                </div>
-            </div>
 
-            <div id="codRules" class="hidden-section">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>COD Charges (₹)</label>
-                        <input type="number" placeholder="e.g. 50">
+                    <!-- 6. Payment Gateway -->
+                    <div class="checkbox-item" style="display: block;">
+                        <label style="margin-bottom: 5px; display: block; font-weight: 600;">6. Do you want to collect
+                            payment through website?</label>
+                        <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                            <div class="radio-item">
+                                <input type="radio" name="wantPG" id="pgYes" value="yes" onchange="updatePGDocuments()">
+                                <label for="pgYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="wantPG" id="pgNo" value="no" checked
+                                    onchange="updatePGDocuments()">
+                                <label for="pgNo">No</label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Allowed PIN Codes for COD</label>
-                        <textarea placeholder="Enter PIN codes separated by commas" rows="1"></textarea>
+
+                    <div id="pgDocumentsList" class="hidden-section"
+                        style="margin-left: 20px; margin-bottom: 15px; border-left: 2px solid #3b82f6; padding-left: 15px;">
+                        <!-- Dynamic Content will be inserted here -->
                     </div>
-                </div>
-            </div>
 
-
-            <!-- Section 7: Delivery & Logistics -->
-            <h2 class="section-header">7. Delivery & Logistics</h2>
-            <div class="form-group">
-                <label>Delivery Methods</label>
-                <div class="checkbox-group" style="flex-direction: row; flex-wrap: wrap; gap: 20px;">
-                    <div class="checkbox-item"><input type="checkbox" id="delOwn"><label for="delOwn">Own
-                            Courier</label></div>
-                    <div class="checkbox-item"><input type="checkbox" id="delThirdParty"><label
-                            for="delThirdParty">Third-party Courier</label></div>
-                    <div class="checkbox-item"><input type="checkbox" id="delPost"><label for="delPost">India
-                            Post</label></div>
-                    <div class="checkbox-item"><input type="checkbox" id="delPickup"><label for="delPickup">Self
-                            Pickup</label></div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Delivery Charges (₹)</label>
-                    <input type="number" placeholder="Standard shipping cost">
-                </div>
-                <div class="form-group">
-                    <label>Serviceable PIN Codes</label>
-                    <textarea placeholder="Leave empty if pan-India" rows="1"></textarea>
-                </div>
-            </div>
-
-
-            <!-- Section 8: Branding & Content -->
-            <h2 class="section-header">8. Branding & Content</h2>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Do you have a Logo?</label>
-                    <select>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Brand Tone</label>
-                    <select>
-                        <option value="Professional">Professional</option>
-                        <option value="Friendly">Friendly</option>
-                        <option value="Premium">Premium / Luxury</option>
-                        <option value="Minimal">Minimalist</option>
-                        <option value="Fun">Fun / Playful</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Preferred Brand Colors</label>
-                    <div class="color-picker-wrapper">
-                        <input type="color" value="#000000">
-                        <input type="text" placeholder="Or enter hex code, e.g. #FF5733" style="flex:1;">
+                    <!-- 7. COD -->
+                    <div class="checkbox-item" style="display: block;">
+                        <label style="margin-bottom: 5px; display: block; font-weight: 600;">7. Will they allow
+                            COD?</label>
+                        <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                            <div class="radio-item">
+                                <input type="radio" name="allowCOD" id="codYes" value="yes" onchange="toggleCOD(true)">
+                                <label for="codYes">Yes</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" name="allowCOD" id="codNo" value="no" checked
+                                    onchange="toggleCOD(false)">
+                                <label for="codNo">No</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>Reference Websites (Inspiration)</label>
-                    <textarea placeholder="Paste URLs of websites you like..." rows="2"></textarea>
-                </div>
-            </div>
 
+                    <div id="codDetails" class="hidden-section"
+                        style="margin-left: 20px; border-left: 2px solid #3b82f6; padding-left: 15px; margin-bottom: 15px;">
+                        <!-- 7a. Delivery Fleet -->
+                        <div class="checkbox-item" style="display: block;">
+                            <label style="margin-bottom: 5px; display: block; font-weight: 600;">Do they have own
+                                delivery fleet and pricing?</label>
+                            <div class="radio-group" style="flex-direction: row; gap: 20px;">
+                                <div class="radio-item">
+                                    <input type="radio" name="hasFleet" id="fleetYes" value="yes"
+                                        onchange="toggleFleet(true)">
+                                    <label for="fleetYes">Yes</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" name="hasFleet" id="fleetNo" value="no" checked
+                                        onchange="toggleFleet(false)">
+                                    <label for="fleetNo">No</label>
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- Section 9: Website Features -->
-            <h2 class="section-header">9. Website Features</h2>
-            <div class="form-group">
-                <label>Must-Have Features</label>
-                <div class="checkbox-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <div class="checkbox-item"><input type="checkbox" checked><label>Product Search</label></div>
-                    <div class="checkbox-item"><input type="checkbox"><label>Product Filters</label></div>
-                    <div class="checkbox-item"><input type="checkbox"><label>Related Products</label></div>
-                    <div class="checkbox-item"><input type="checkbox"><label>Coupon Codes</label></div>
-                    <div class="checkbox-item"><input type="checkbox" id="featReviews"
-                            onchange="toggleReviews(this.checked)"><label>Customer Reviews</label></div>
-                </div>
-            </div>
-            <div id="reviewSamples" class="hidden-section">
-                <div class="form-group">
-                    <label>Sample Reviews (if available)</label>
-                    <textarea placeholder="Paste 2-3 testimonials or reviews..." rows="3"></textarea>
-                </div>
-            </div>
-
-
-            <!-- Section 10: Admin & Operations -->
-            <h2 class="section-header">10. Admin & Operations</h2>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Order Notifications (Email)</label>
-                    <input type="email" placeholder="admin@domain.com">
-                </div>
-                <div class="form-group">
-                    <label>Order Notifications (WhatsApp Number)</label>
-                    <input type="tel" placeholder="+91...">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Admin Panel Training Required?</label>
-                <div class="radio-group" style="flex-direction: row; gap: 20px;">
-                    <div class="radio-item"><input type="radio" name="training" id="trainYes"><label
-                            for="trainYes">Yes</label></div>
-                    <div class="radio-item"><input type="radio" name="training" id="trainNo" checked><label
-                            for="trainNo">No</label></div>
-                </div>
-            </div>
-
-
-            <!-- Section 11: Domain & Hosting -->
-            <h2 class="section-header">11. Domain & Hosting</h2>
-            <div class="form-row">
-                <!-- Domain -->
-                <div class="form-group">
-                    <label>Domain Purchased?</label>
-                    <div class="radio-group" style="flex-direction: row; gap: 20px;">
-                        <div class="radio-item"><input type="radio" name="domainStatus" id="domYes" value="yes"
-                                onchange="toggleDomain(true)"><label for="domYes">Yes</label></div>
-                        <div class="radio-item"><input type="radio" name="domainStatus" id="domNo" value="no" checked
-                                onchange="toggleDomain(false)"><label for="domNo">No</label></div>
-                    </div>
-                </div>
-                <!-- Hosting -->
-                <div class="form-group">
-                    <label>Hosting Purchased?</label>
-                    <div class="radio-group" style="flex-direction: row; gap: 20px;">
-                        <div class="radio-item"><input type="radio" name="hostingStatus" id="hostYes" value="yes"
-                                onchange="toggleHosting(true)"><label for="hostYes">Yes</label></div>
-                        <div class="radio-item"><input type="radio" name="hostingStatus" id="hostNo" value="no" checked
-                                onchange="toggleHosting(false)"><label for="hostNo">No</label></div>
+                        <!-- 7b. Area and Cost -->
+                        <div id="fleetDetails" class="hidden-section" style="margin-top: 10px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Area allowed for COD
+                                and cost</label>
+                            <textarea class="form-control" rows="3"
+                                placeholder="Enter areas and pricing details..."></textarea>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div id="domainDetails" class="hidden-section">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Domain Name</label>
-                        <input type="text" placeholder="example.com">
-                    </div>
-                    <div class="form-group">
-                        <label>Domain Provider Credentials</label>
-                        <input type="text" placeholder="Username / Password (optional)">
-                    </div>
-                </div>
-            </div>
-
-            <div id="hostingDetails" class="hidden-section">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Hosting Provider</label>
-                        <input type="text" placeholder="e.g. GoDaddy, Hostinger">
-                    </div>
-                    <div class="form-group">
-                        <label>Hosting Access Credentials</label>
-                        <input type="text" placeholder="Username / Password or CPanel Link">
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Section 12: Commercials -->
-            <h2 class="section-header">12. Commercials</h2>
-            <div class="form-group">
-                <label>Total Project Budget (₹)</label>
-                <input type="number" placeholder="0.00">
-            </div>
-            <div class="form-group">
-                <label>Payment Mode</label>
-                <div class="radio-group">
-                    <div class="radio-item">
-                        <input type="radio" name="payMode" id="payFull" value="full" checked
-                            onchange="toggleAdvance(false)">
-                        <label for="payFull">Full Payment</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" name="payMode" id="payAdv" value="advance" onchange="toggleAdvance(true)">
-                        <label for="payAdv">Advance Payment</label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="advanceDetails" class="hidden-section">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Advance Amount (₹)</label>
-                        <input type="number" id="advanceAmount" placeholder="0.00" oninput="calcRemaining()">
-                    </div>
-                    <div class="form-group">
-                        <label>Remaining Payment</label>
-                        <input type="text" id="remainingAmount" placeholder="Will be calculated..." readonly
-                            style="background-color: #f1f5f9;">
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Actions -->
             <div class="form-actions">
                 <button type="button" class="btn-secondary"
                     onclick="window.location.href='create-client.html'">Cancel</button>
@@ -536,53 +397,117 @@
     <script src="security.js"></script>
     <script>
         // Conditional Logic Functions
-
-        function toggleGST(show) {
-            const el = document.getElementById('gstDetails');
+        function toggleGSTCheck(show) {
+            const el = document.getElementById('gstDetailsInput');
             el.style.display = show ? 'block' : 'none';
         }
 
-        function togglePG(show) {
-            const el = document.getElementById('pgDocuments');
+        function toggleLogoMessage(show) {
+            const el = document.getElementById('logoMessage');
             el.style.display = show ? 'block' : 'none';
         }
 
-        function toggleCOD(checked) {
-            const el = document.getElementById('codRules');
-            el.style.display = checked ? 'block' : 'none';
-        }
-
-        function toggleReviews(checked) {
-            const el = document.getElementById('reviewSamples');
-            el.style.display = checked ? 'block' : 'none';
-        }
-
-        function toggleDomain(show) {
-            const el = document.getElementById('domainDetails');
+        function toggleCOD(show) {
+            const el = document.getElementById('codDetails');
             el.style.display = show ? 'block' : 'none';
         }
 
-        function toggleHosting(show) {
-            const el = document.getElementById('hostingDetails');
+        function toggleFleet(show) {
+            const el = document.getElementById('fleetDetails');
             el.style.display = show ? 'block' : 'none';
         }
 
-        function toggleAdvance(show) {
-            const el = document.getElementById('advanceDetails');
-            el.style.display = show ? 'block' : 'none';
-        }
 
-        function calcRemaining() {
-            // Placeholder logic since Total Budget isn't captured in a variable yet
-            // In a real scenario, we'd grab the Total Budget value and subtract Advance
-            const adv = document.getElementById('advanceAmount').value;
-            const remainingField = document.getElementById('remainingAmount');
-            if (adv) {
-                remainingField.value = `Total - ${adv}`;
+
+        const pgRequirements = {
+            "Sole Proprietorship": [
+                "Proprietor’s Proof: Personal PAN card",
+                "Address Proof: Aadhaar/Voter ID/Passport",
+                "Business Registration Proof: GST/Utility Bill/Rent Agreement/MSME/Shop Act",
+                "Bank Proof: Cancelled cheque or passbook with business name",
+                "Other: Trade licence (if applicable)"
+            ],
+            "Partnership Firm": [
+                "Firm’s Proof: PAN card of the partnership firm",
+                "Constitution Documents: Registered Partnership deed",
+                "Address Proof of Firm: Commercial property documents or NOC",
+                "Partners’ Proof: PAN and Aadhaar of all authorised signatories",
+                "Bank Proof: Cancelled cheque with firm’s name",
+                "Other: Shop & Establishment cert, GST cert",
+                "UBO Declarations for partners > 10% share"
+            ],
+            "LLP": [
+                "Registration Proof: Certificate of Incorporation (CoI) and LLP Agreement",
+                "Address Proof of Firm: PAN Card of the LLP",
+                "Designated Partners’ Proof: PAN and Address proofs",
+                "Bank Proof: Cancelled cheque or bank statement in LLP’s name"
+            ],
+            "Private Limited": [
+                "Registration Proof: Certificate of Incorporation (CoI)",
+                "Constitution Documents: MoA and AoA",
+                "Company Proof: Company PAN Card",
+                "Board Resolution on company letterhead",
+                "Directors’ Proof: PAN and Address proofs",
+                "Other: Bank proof, GST certificate, Website with policies"
+            ],
+            "Public Limited": [
+                "Registration Proof: Certificate of Incorporation (CoI)",
+                "Constitution Documents: MoA and AoA",
+                "Company Proof: Company PAN Card",
+                "Board Resolution on company letterhead",
+                "Directors’ Proof: PAN and Address proofs",
+                "Other: Bank proof, GST certificate, Website with policies"
+            ],
+            "Section 8": [
+                "Registration Proof: Trust Deed or Registration Certificate",
+                "Entity Proof: PAN Card of the Trust/NGO",
+                "Authorisation: Resolution letter",
+                "Bank Proof: Cancelled cheque or bank statement"
+            ]
+        };
+
+        // Map other types to closest match
+        pgRequirements["OPC"] = pgRequirements["Private Limited"];
+        pgRequirements["HUF"] = pgRequirements["Sole Proprietorship"]; // Fallback/Approximation
+        pgRequirements["Co-operative"] = pgRequirements["Section 8"]; // Approximation
+        pgRequirements["Producer"] = pgRequirements["Private Limited"];
+
+        function updatePGDocuments() {
+            const wantPG = document.querySelector('input[name="wantPG"]:checked').value === 'yes';
+            const container = document.getElementById('pgDocumentsList');
+            const businessType = document.getElementById('businessType').value;
+
+            if (wantPG) {
+                if (!businessType) {
+                    container.innerHTML = '<p style="color: #eab308;">Please select a Business Type in Section 1 to see required documents.</p>';
+                    container.style.display = 'block';
+                    return;
+                }
+
+                const docs = pgRequirements[businessType] || [];
+                if (docs.length === 0) {
+                    container.innerHTML = '<p>No specific documents listed for this business type.</p>';
+                } else {
+                    let html = '<p style="font-weight:600; margin-bottom:10px;">Required Documents for ' + businessType + ':</p>';
+                    docs.forEach((doc, index) => {
+                        html += `
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pg_doc_${index}" checked>
+                                <label for="pg_doc_${index}">${doc}</label>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                }
+                container.style.display = 'block';
             } else {
-                remainingField.value = '';
+                container.style.display = 'none';
             }
         }
+
+        // Add listener to business type to update list if already 'Yes'
+        document.getElementById('businessType').addEventListener('change', updatePGDocuments);
+
     </script>
 </body>
 
