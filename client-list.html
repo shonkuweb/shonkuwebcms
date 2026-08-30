@@ -98,8 +98,10 @@
                                     <td><span class="status-badge ${getStatusClass(client.status)}">${client.status || 'N/A'}</span></td>
                                     <td>${client.contact || 'N/A'}</td>
                                     <td>
-                                        <button class="action-btn edit-btn" onclick="alert('Edit implementation pending')">Edit</button>
-                                        <button class="action-btn delete-btn" onclick="deleteClient('${docSnap.id}')">Delete</button>
+                                        <div class="action-buttons">
+                                            <button type="button" class="btn-action btn-edit" onclick="alert('Edit implementation pending')">Edit</button>
+                                            <button type="button" class="btn-action btn-delete" onclick="deleteClient('${docSnap.id}')">Delete</button>
+                                        </div>
                                     </td>
                                 </tr>
                             `;

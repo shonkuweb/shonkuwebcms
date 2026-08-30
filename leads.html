@@ -37,116 +37,14 @@
                         <input type="text" id="businessName" required>
                     </div>
                     <div class="form-group">
-                        <label for="websiteType">Website Type</label>
-                        <select id="websiteType" required>
-                            <option value="" disabled selected>Select Website Type</option>
-                            <option value="E-commerce Website">E-commerce Website</option>
-                            <option value="Business Website">Business Website</option>
-                            <option value="Portfolio Website">Portfolio Website</option>
-                            <option value="Blog Website">Blog Website</option>
-                            <option value="News Website">News Website</option>
-                            <option value="Educational Website">Educational Website</option>
-                            <option value="Social Networking Website">Social Networking Website</option>
-                            <option value="Forum / Community Website">Forum / Community Website</option>
-                            <option value="Non-Profit Website">Non-Profit Website</option>
-                            <option value="Government Website">Government Website</option>
-                            <option value="Entertainment Website">Entertainment Website</option>
-                            <option value="Personal Website">Personal Website</option>
-                            <option value="Web Application">Web Application</option>
-                            <option value="Landing Page">Landing Page</option>
-                            <option value="Directory / Listing Website">Directory / Listing Website</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group" style="width: 100%;">
                         <label for="contactNumber">Contact Number</label>
                         <input type="tel" id="contactNumber" required maxlength="10"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)">
                     </div>
                 </div>
 
-
-
-                <div class="form-group">
-                    <label for="address">Address</label>
-                    <textarea id="address" rows="2" required></textarea>
-                </div>
-
-                <!-- Existing Website Toggle -->
-                <div class="form-group">
-                    <label>Existing Website?</label>
-                    <div style="display: flex; gap: 20px; margin-top: 8px;">
-                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
-                            <input type="radio" name="existingWebsite" value="yes"
-                                style="width: auto; margin-right: 8px;"> Yes
-                        </label>
-                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
-                            <input type="radio" name="existingWebsite" value="no" checked
-                                style="width: auto; margin-right: 8px;"> No
-                        </label>
-                    </div>
-                </div>
-
-                <div id="websiteFields" class="hidden">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="websiteUrl">Website URL</label>
-                            <input type="text" id="websiteUrl">
-                        </div>
-                        <div class="form-group">
-                            <label for="websiteImprovement">Website Improvement Thoughts</label>
-                            <input type="text" id="websiteImprovement">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Conditional Social Media -->
-                <div class="form-group">
-                    <label>Have social media?</label>
-                    <div style="display: flex; gap: 20px; margin-top: 8px;">
-                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
-                            <input type="radio" name="hasSocial" value="yes" style="width: auto; margin-right: 8px;">
-                            Yes
-                        </label>
-                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
-                            <input type="radio" name="hasSocial" value="no" checked
-                                style="width: auto; margin-right: 8px;"> No
-                        </label>
-                    </div>
-                </div>
-
-                <div id="socialField" class="hidden">
-                    <div class="form-group">
-                        <label for="socialMedia">Social Media Link</label>
-                        <input type="text" id="socialMedia">
-                    </div>
-                </div>
-
-                <!-- Conditional Email -->
-                <div class="form-group">
-                    <label>Have a mail?</label>
-                    <div style="display: flex; gap: 20px; margin-top: 8px;">
-                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
-                            <input type="radio" name="hasEmail" value="yes" style="width: auto; margin-right: 8px;"> Yes
-                        </label>
-                        <label style="display: inline-flex; align-items: center; font-weight: normal;">
-                            <input type="radio" name="hasEmail" value="no" checked
-                                style="width: auto; margin-right: 8px;"> No
-                        </label>
-                    </div>
-                </div>
-
-                <div id="emailField" class="hidden">
-                    <div class="form-group">
-                        <label for="emailAddress">Email Address</label>
-                        <input type="email" id="emailAddress">
-                    </div>
-                </div>
-
                 <div class="form-row">
-                    <div class="form-group" style="width: 100%;">
+                    <div class="form-group">
                         <label for="leadStatus">Lead Status</label>
                         <select id="leadStatus">
                             <option value="New">New</option>
@@ -155,11 +53,10 @@
                             <option value="Not Interested">Not Interested</option>
                         </select>
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="businessDescription">Business Description</label>
-                    <textarea id="businessDescription" rows="3" required></textarea>
+                    <div class="form-group">
+                        <label for="socialMedia">Social Media Link</label>
+                        <input type="text" id="socialMedia" placeholder="Enter social media link...">
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -208,35 +105,6 @@
                             </div>
                         </div>
                         <div class="filter-group">
-                            <label>Category</label>
-                            <select id="filterCategory">
-                                <option value="">All Categories</option>
-                                <option value="E-commerce Website">E-commerce Website</option>
-                                <option value="Business Website">Business Website</option>
-                                <option value="Portfolio Website">Portfolio Website</option>
-                                <option value="Blog Website">Blog Website</option>
-                                <option value="News Website">News Website</option>
-                                <option value="Educational Website">Educational Website</option>
-                                <option value="Social Networking Website">Social Networking Website</option>
-                                <option value="Forum / Community Website">Forum / Community Website</option>
-                                <option value="Non-Profit Website">Non-Profit Website</option>
-                                <option value="Government Website">Government Website</option>
-                                <option value="Entertainment Website">Entertainment Website</option>
-                                <option value="Personal Website">Personal Website</option>
-                                <option value="Web Application">Web Application</option>
-                                <option value="Landing Page">Landing Page</option>
-                                <option value="Directory / Listing Website">Directory / Listing Website</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label>Existing Website</label>
-                            <select id="filterWebsite">
-                                <option value="">Any</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
                             <label>Status</label>
                             <select id="filterStatus">
                                 <option value="">All Statuses</option>
@@ -267,11 +135,8 @@
                         <th>S.No.</th>
                         <th>Date</th>
                         <th>Business Name</th>
-                        <th>Type</th>
                         <th>Contact</th>
-                        <th>Email</th>
-                        <th>Website</th>
-                        <th>Social</th>
+                        <th>Social Media</th>
                         <th>Remarks</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -324,52 +189,6 @@
             }
         });
 
-        // Toggle Website Fields Visibility (Existing)
-        const websiteFields = document.getElementById('websiteFields');
-        const websiteRadios = document.querySelectorAll('input[name="existingWebsite"]');
-
-        websiteRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.value === 'yes') {
-                    websiteFields.classList.remove('hidden');
-                } else {
-                    websiteFields.classList.add('hidden');
-                }
-            });
-        });
-
-        // Toggle Email Field Visibility
-        const emailField = document.getElementById('emailField');
-        const emailRadios = document.querySelectorAll('input[name="hasEmail"]');
-
-        emailRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.value === 'yes') {
-                    emailField.classList.remove('hidden');
-                    document.getElementById('emailAddress').setAttribute('required', 'true');
-                } else {
-                    emailField.classList.add('hidden');
-                    document.getElementById('emailAddress').removeAttribute('required');
-                    document.getElementById('emailAddress').value = '';
-                }
-            });
-        });
-
-        // Toggle Social Media Field Visibility
-        const socialField = document.getElementById('socialField');
-        const socialRadios = document.querySelectorAll('input[name="hasSocial"]');
-
-        socialRadios.forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                if (e.target.value === 'yes') {
-                    socialField.classList.remove('hidden');
-                } else {
-                    socialField.classList.add('hidden');
-                    document.getElementById('socialMedia').value = '';
-                }
-            });
-        });
-
         // Notification System
         function showNotification(message, type = 'success') {
             const container = document.getElementById('toastContainer');
@@ -396,62 +215,19 @@
             e.preventDefault();
 
             // Collect form data
-            const businessName = document.getElementById('businessName').value;
-            const websiteType = document.getElementById('websiteType').value;
-            const contactNumber = document.getElementById('contactNumber').value;
-
-            // Handle Email
-            const hasEmail = document.querySelector('input[name="hasEmail"]:checked').value;
-            let emailAddress = 'N/A';
-            if (hasEmail === 'yes') {
-                emailAddress = document.getElementById('emailAddress').value;
-            }
-
-            const existingWebsite = document.querySelector('input[name="existingWebsite"]:checked').value;
-            const remarks = document.getElementById('remarks').value;
-            const businessDescription = document.getElementById('businessDescription').value;
-
-            // Handle Social
-            const hasSocial = document.querySelector('input[name="hasSocial"]:checked').value;
-            let socialMedia = 'N/A';
-            if (hasSocial === 'yes') {
-                socialMedia = document.getElementById('socialMedia').value || 'N/A';
-            }
-
-            let websiteUrl = '';
-            let websiteImprovement = '';
-
-            // Handle conditional fields
-            if (existingWebsite === 'yes') {
-                websiteUrl = document.getElementById('websiteUrl').value || '';
-                websiteImprovement = document.getElementById('websiteImprovement').value || '';
-
-                // Validate fields if Yes is selected
-                if (!websiteUrl) {
-                    showNotification('Please enter a Website URL', 'error');
-                    return;
-                }
-                if (!websiteImprovement) {
-                    showNotification('Please enter improvement thoughts', 'error');
-                    return;
-                }
-            }
-
+            const businessName = document.getElementById('businessName').value.trim();
+            const contactNumber = document.getElementById('contactNumber').value.trim();
             const leadStatus = document.getElementById('leadStatus').value;
+            const socialMedia = document.getElementById('socialMedia').value.trim() || 'N/A';
+            const remarks = document.getElementById('remarks').value.trim();
 
             // Prepare data object
             const leadData = {
                 businessName,
-                websiteType,
                 contactNumber,
-                emailAddress,
-                socialMedia,
-                existingWebsite,
-                websiteUrl,
-                websiteImprovement,
                 leadStatus,
+                socialMedia,
                 remarks,
-                businessDescription,
                 updatedAt: serverTimestamp()
             };
 
@@ -504,8 +280,6 @@
         let activeFilters = {
             dateStart: '',
             dateEnd: '',
-            category: '',
-            website: '',
             status: ''
         };
 
@@ -520,8 +294,6 @@
             activeFilters = {
                 dateStart: document.getElementById('filterDateStart').value,
                 dateEnd: document.getElementById('filterDateEnd').value,
-                category: document.getElementById('filterCategory').value,
-                website: document.getElementById('filterWebsite').value,
                 status: document.getElementById('filterStatus').value
             };
 
@@ -535,15 +307,11 @@
         clearFiltersBtn.addEventListener('click', () => {
             document.getElementById('filterDateStart').value = '';
             document.getElementById('filterDateEnd').value = '';
-            document.getElementById('filterCategory').value = '';
-            document.getElementById('filterWebsite').value = '';
             document.getElementById('filterStatus').value = '';
 
             activeFilters = {
                 dateStart: '',
                 dateEnd: '',
-                category: '',
-                website: '',
                 status: ''
             };
 
@@ -568,22 +336,15 @@
                 filteredResults = filteredResults.filter(lead => {
                     const business = (lead.businessName || '').toLowerCase();
                     const contact = (lead.contactNumber || '').toLowerCase();
-                    // const email = (lead.emailAddress || '').toLowerCase(); // Removed
-                    return business.includes(query) || contact.includes(query); // || email.includes(query);
+                    const social = (lead.socialMedia || '').toLowerCase();
+                    const remarks = (lead.remarks || '').toLowerCase();
+                    return business.includes(query) || contact.includes(query) || social.includes(query) || remarks.includes(query);
                 });
             }
 
             // 2. Apply Filters
-            if (activeFilters.category) {
-                filteredResults = filteredResults.filter(lead => lead.websiteType === activeFilters.category);
-            }
-
             if (activeFilters.status) {
                 filteredResults = filteredResults.filter(lead => lead.leadStatus === activeFilters.status);
-            }
-
-            if (activeFilters.website) {
-                filteredResults = filteredResults.filter(lead => lead.existingWebsite === activeFilters.website);
             }
 
             if (activeFilters.dateStart) {
@@ -606,14 +367,12 @@
                 });
             }
 
-            // Update Suggestions (only based on text search, ignoring filters for suggestions to keep it useful? 
-            // Or should suggestions only show what matches filters? standard is suggestions help you search, so usually global.
-            // But let's keep suggestions consistent with what the user sees.)
+            // Update Suggestions
             if (query.length > 0 && specificQuery === null) {
                 const suggestions = filteredResults.slice(0, 5);
                 if (suggestions.length > 0) {
                     suggestionsBox.innerHTML = suggestions.map(lead => `
-                        <div class="suggestion-item" onclick="selectSuggestion('${lead.businessName}')">
+                        <div class="suggestion-item" onclick="selectSuggestion('${lead.businessName.replace(/'/g, "\\'")}')">
                             <div>
                                 <div class="suggestion-main">${lead.businessName}</div>
                                 <div class="suggestion-sub">${lead.contactNumber}</div>
@@ -659,15 +418,6 @@
             }
 
             let counter = 0;
-            // Group by category manually since we might be rendering a filtered subset
-            // If filtered, do we still group? Yes, structure should be maintained.
-
-            // We need to re-sort or grouping logic depends on order?
-            // The leads come in date order. We can group as we iterate if we want to preserve category headers.
-            // But if we filter, we might break the original "grouping" if we just iterate.
-            // The original logic relied on `insertRow` finding the category header or creating it.
-            // Let's reuse `insertRow` logic but we need to clear headers first.
-            // `tableBody.innerHTML = ''` clears everything.
 
             leadsToRender.forEach(lead => {
                 counter++;
@@ -678,31 +428,25 @@
                     dateStr = new Date(lead.createdAt.seconds * 1000).toLocaleString();
                 }
 
-                // Prepare website info
-                let websiteInfo = 'N/A';
-                if (lead.existingWebsite === 'yes') {
-                    // Make URL clickable for copy
-                    websiteInfo = `<span class="copy-target" onclick="copyToClipboard('${lead.websiteUrl}')" title="Click to copy">${lead.websiteUrl}</span> <br><small style="color: #64748b;">${lead.websiteImprovement}</small>`;
-                }
-
-                const row = createRowElement(lead.id, counter, dateStr, lead, websiteInfo);
+                const row = createRowElement(lead.id, counter, dateStr, lead);
 
                 // Header Highlighting Check
                 if (highlightQuery) {
                     const business = (lead.businessName || '').toLowerCase();
                     const contact = (lead.contactNumber || '').toLowerCase();
-                    const email = (lead.emailAddress || '').toLowerCase();
-                    if (business.includes(highlightQuery) || contact.includes(highlightQuery) || email.includes(highlightQuery)) {
+                    const social = (lead.socialMedia || '').toLowerCase();
+                    const remarks = (lead.remarks || '').toLowerCase();
+                    if (business.includes(highlightQuery) || contact.includes(highlightQuery) || social.includes(highlightQuery) || remarks.includes(highlightQuery)) {
                         row.classList.add('highlight-row');
                     }
                 }
 
-                insertRow(row, lead.websiteType);
+                tableBody.appendChild(row);
             });
         }
 
         // Helper to create table row HTML
-        window.createRowElement = function (id, counter, date, data, websiteDisplay) {
+        window.createRowElement = function (id, counter, date, data) {
             const row = document.createElement('tr');
             row.dataset.id = id; // Store doc ID on row for finding it later
             row.dataset.raw = JSON.stringify(data); // Store full data for easy edit populate
@@ -714,21 +458,23 @@
                 statusOptions += `<option value="${s}" ${s === data.leadStatus ? "selected" : ""}>${s}</option>`;
             });
 
-            // Escape single quotes in websiteRaw to prevent breaking HTML attribute
-            const safeWebsiteRaw = row.dataset.raw ? row.dataset.raw.replace(/'/g, "&apos;") : "";
+            // Social media display
+            let socialDisplay = 'N/A';
+            if (data.socialMedia && data.socialMedia !== 'N/A') {
+                const socialUrl = (data.socialMedia.startsWith('http://') || data.socialMedia.startsWith('https://'))
+                    ? data.socialMedia
+                    : `https://${data.socialMedia}`;
+                socialDisplay = `<a href="${socialUrl}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: underline;" title="Open link">${data.socialMedia}</a> <span class="copy-target" onclick="copyToClipboard('${data.socialMedia.replace(/'/g, "\\'")}')" title="Click to copy" style="margin-left: 4px; cursor: pointer;">📋</span>`;
+            }
 
             row.innerHTML = `
                 <td>${counter}</td>
                 <td>${date}</td>
                 <td><strong class="copy-target" onclick="copyToClipboard('${data.businessName.replace(/'/g, "\\'")}')" title="Click to copy">${data.businessName}</strong></td>
-                <td>${data.websiteType}</td>
                 <td><span class="copy-target" onclick="copyToClipboard('${data.contactNumber}')" title="Click to copy">${data.contactNumber}</span></td>
-                <td>${data.emailAddress !== 'N/A' ? `<span class="copy-target" onclick="copyToClipboard('${data.emailAddress}')" title="Click to copy">${data.emailAddress}</span>` : 'N/A'}</td>
-                <td>${websiteDisplay}</td>
-                <td>${data.socialMedia !== 'N/A' ? `<span class="copy-target" onclick="copyToClipboard('${data.socialMedia}')" title="Click to copy">${data.socialMedia}</span>` : 'N/A'}</td>
+                <td>${socialDisplay}</td>
                 <td>
                     <button type="button" class="btn-sm btn-view-remarks" onclick="openRemarksModal('${id}')">View</button>
-                    <!-- Hidden input to store value if needed for quick access without DB lookup, relying on dataset -->
                 </td>
                 <td>
                     <select class="status-select" onchange="updateInline('${id}', 'leadStatus', this.value)">
@@ -743,40 +489,6 @@
                 </td>
             `;
             return row;
-        }
-
-        // Logic to insert row into correct category group
-        window.insertRow = function (row, category) {
-            // Find or create category section
-            let categoryRow = document.getElementById(`cat-${category.replace(/\s+/g, '-')}`);
-
-            if (!categoryRow) {
-                // Create category header row if it doesn't exist
-                categoryRow = document.createElement('tr');
-                categoryRow.id = `cat-${category.replace(/\s+/g, '-')}`;
-                categoryRow.className = 'category-header';
-                categoryRow.innerHTML = `
-                    <td colspan="10" style="background-color: #f1f5f9; font-weight: 700; color: #0f172a; text-transform: uppercase; letter-spacing: 0.05em; padding: 16px;">
-                        ${category}
-                    </td>
-                `;
-                tableBody.appendChild(categoryRow);
-            }
-
-            // Find the last row in this category group to append after
-            let lastRowInGroup = categoryRow;
-            let nextSibling = categoryRow.nextElementSibling;
-
-            while (nextSibling && !nextSibling.classList.contains('category-header')) {
-                lastRowInGroup = nextSibling;
-                nextSibling = nextSibling.nextElementSibling;
-            }
-
-            if (lastRowInGroup.nextSibling) {
-                tableBody.insertBefore(row, lastRowInGroup.nextSibling);
-            } else {
-                tableBody.appendChild(row);
-            }
         }
 
         // Global variable to store ID for deletion
@@ -809,7 +521,6 @@
             } catch (e) {
                 console.error("Error deleting: ", e);
                 showNotification("Failed to delete from database.", 'error');
-                // Could revert here if needed, but optimistic UI + error toast is ok for now
             }
             closeDeleteModal();
         }
@@ -834,9 +545,6 @@
         }
 
         window.editLead = function (id) {
-            // Find row by dataset id is safest? Or just pass data?
-            // Since we reload table on snapshot, the row might have changed if we rely on DOM object.
-            // But for simple "populate form", getting data from DOM is fine.
             const row = document.querySelector(`tr[data-id="${id}"]`);
             if (!row) return;
 
@@ -844,21 +552,11 @@
             editingRowId = id; // Set global ID
 
             // Populate form
-            document.getElementById('businessName').value = data.businessName;
-            document.getElementById('websiteType').value = data.websiteType;
-            document.getElementById('contactNumber').value = data.contactNumber;
-            // document.getElementById('emailAddress').value = data.emailAddress; // Removed
-            document.getElementById('leadStatus').value = data.leadStatus;
+            document.getElementById('businessName').value = data.businessName || '';
+            document.getElementById('contactNumber').value = data.contactNumber || '';
+            document.getElementById('leadStatus').value = data.leadStatus || 'New';
+            document.getElementById('socialMedia').value = (data.socialMedia && data.socialMedia !== 'N/A') ? data.socialMedia : '';
             document.getElementById('remarks').value = data.remarks || '';
-            document.getElementById('businessDescription').value = data.businessDescription || '';
-
-            if (data.existingWebsite === 'yes') {
-                document.querySelector('input[name="existingWebsite"][value="yes"]').click();
-                document.getElementById('websiteUrl').value = data.websiteUrl;
-                document.getElementById('websiteImprovement').value = data.websiteImprovement;
-            } else {
-                document.querySelector('input[name="existingWebsite"][value="no"]').click();
-            }
 
             document.querySelector('button[type="submit"]').textContent = 'Update Lead';
             document.querySelector('.form-header').scrollIntoView({ behavior: 'smooth' });
@@ -884,29 +582,21 @@
         // Fields to watch
         const businessInput = document.getElementById('businessName');
         const contactInput = document.getElementById('contactNumber');
-        const emailInput = document.getElementById('emailAddress');
-        // websiteUrl input is conditional, so we might check it dynamically or attach listener if it exists.
-        // It's static in DOM but hidden.
-        const websiteUrlInput = document.getElementById('websiteUrl');
 
-        const inputsToCheck = [businessInput, contactInput, emailInput, websiteUrlInput];
+        const inputsToCheck = [businessInput, contactInput].filter(Boolean);
 
         inputsToCheck.forEach(input => {
-            if (input) {
-                input.addEventListener('input', () => {
-                    checkForDuplicates();
-                });
-            }
+            input.addEventListener('input', () => {
+                checkForDuplicates();
+            });
         });
 
         function checkForDuplicates() {
-            const businessVal = businessInput.value.trim().toLowerCase();
-            const contactVal = contactInput.value.trim().replace(/[^0-9]/g, ''); // Compare cleaned numbers
-            const emailVal = emailInput.value.trim().toLowerCase();
-            const websiteVal = websiteUrlInput.value.trim().toLowerCase();
+            const businessVal = businessInput ? businessInput.value.trim().toLowerCase() : '';
+            const contactVal = contactInput ? contactInput.value.trim().replace(/[^0-9]/g, '') : '';
 
             // Needs at least some input to check
-            if (businessVal.length < 3 && contactVal.length < 4 && emailVal.length < 5 && websiteVal.length < 5) {
+            if (businessVal.length < 3 && contactVal.length < 4) {
                 duplicateWarning.classList.add('hidden');
                 duplicateWarning.innerHTML = '';
                 return;
@@ -924,21 +614,9 @@
                 }
 
                 // 2. Contact Number Check (Last 6 digits or exact if short?)
-                // Let's do partial if length > 4
                 if (contactVal.length >= 4 && lead.contactNumber) {
                     const leadContact = lead.contactNumber.replace(/[^0-9]/g, '');
                     if (leadContact.includes(contactVal)) matchFound = true;
-                }
-
-                // 3. Email Check (Exact or partial?) 
-                // Partial email might be annoying (e.g. "gmail"). Let's do exact or startsWith
-                if (emailVal.length >= 5 && lead.emailAddress && lead.emailAddress !== 'N/A') {
-                    if (lead.emailAddress.toLowerCase().includes(emailVal)) matchFound = true;
-                }
-
-                // 4. Website Check
-                if (websiteVal.length >= 5 && lead.websiteUrl) {
-                    if (lead.websiteUrl.toLowerCase().includes(websiteVal)) matchFound = true;
                 }
 
                 return matchFound;
@@ -985,8 +663,6 @@
 
         window.resetForm = function () {
             form.reset();
-            websiteFields.classList.add('hidden');
-            document.querySelector('input[name="existingWebsite"][value="no"]').checked = true;
             if (editingRowId) {
                 editingRowId = null;
                 document.querySelector('button[type="submit"]').textContent = 'Add Lead';
